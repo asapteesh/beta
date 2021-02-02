@@ -1,7 +1,7 @@
 import React from 'react';
 
-import fluxLogoBlack from '../../assets/images/flux-logo-black.svg';
-import fluxLogoWhite from '../../assets/images/flux-logo-white.svg';
+import fluxLogoBlack from '../../assets/images/flux-logo-black.png';
+import fluxLogoWhite from '../../assets/images/flux-logo-white.png';
 import twitterLogo from '../../assets/images/icons/twitter_logo.png';
 import telegramLogo from '../../assets/images/icons/telegram_logo.png';
 import { useDarkModeThemeContext } from '../../utils/hooks/useDarkModeTheme';

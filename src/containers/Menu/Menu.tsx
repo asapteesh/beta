@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import MuiMenu from '@material-ui/core/Menu';
 import MuiMenuItem from '@material-ui/core/MenuItem';
 
-import fluxLogoBlack from '../../assets/images/flux-logo-black.svg';
-import fluxLogoWhite from '../../assets/images/flux-logo-white.svg';
+import fluxLogoBlack from '../../assets/images/flux-logo-black.png';
+import fluxLogoWhite from '../../assets/images/flux-logo-white.png';
 import { useDarkModeThemeContext } from "../../utils/hooks/useDarkModeTheme";
 import Button from "../../components/Button";
 import trans from "../../translation/trans";

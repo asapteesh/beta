@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://fluxprotocol.github.io/beta/static/css/main.c749884f.chunk.css",
-    "main.js": "https://fluxprotocol.github.io/beta/static/js/main.5b41ae2d.chunk.js",
-    "main.js.map": "https://fluxprotocol.github.io/beta/static/js/main.5b41ae2d.chunk.js.map",
+    "main.js": "https://fluxprotocol.github.io/beta/static/js/main.4d403c71.chunk.js",
+    "main.js.map": "https://fluxprotocol.github.io/beta/static/js/main.4d403c71.chunk.js.map",
     "runtime-main.js": "https://fluxprotocol.github.io/beta/static/js/runtime-main.2dda98de.js",
     "runtime-main.js.map": "https://fluxprotocol.github.io/beta/static/js/runtime-main.2dda98de.js.map",
     "static/js/2.3be1c414.chunk.js": "https://fluxprotocol.github.io/beta/static/js/2.3be1c414.chunk.js",
@@ -29,8 +29,6 @@
     "static/media/circle-startups.fbb6d89b.png": "https://fluxprotocol.github.io/beta/static/media/circle-startups.fbb6d89b.png",
     "static/media/circle-stocks.45134b15.png": "https://fluxprotocol.github.io/beta/static/media/circle-stocks.45134b15.png",
     "static/media/circle-viral.f35235ce.png": "https://fluxprotocol.github.io/beta/static/media/circle-viral.f35235ce.png",
-    "static/media/flux-logo-black.872a85f3.svg": "https://fluxprotocol.github.io/beta/static/media/flux-logo-black.872a85f3.svg",
-    "static/media/flux-logo-white.f9521cd9.svg": "https://fluxprotocol.github.io/beta/static/media/flux-logo-white.f9521cd9.svg",
     "static/media/icon-beer.6e18acab.svg": "https://fluxprotocol.github.io/beta/static/media/icon-beer.6e18acab.svg",
     "static/media/icon-crypto.c48fc772.png": "https://fluxprotocol.github.io/beta/static/media/icon-crypto.c48fc772.png",
     "static/media/icon-esports.e99b62e2.png": "https://fluxprotocol.github.io/beta/static/media/icon-esports.e99b62e2.png",
@@ -46,6 +44,6 @@
     "static/js/runtime-main.2dda98de.js",
     "static/js/2.3be1c414.chunk.js",
     "static/css/main.c749884f.chunk.css",
-    "static/js/main.5b41ae2d.chunk.js"
+    "static/js/main.4d403c71.chunk.js"
   ]
 }

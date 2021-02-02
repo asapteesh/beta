@@ -109,6 +109,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
 export interface MarketFilters {
     categories?: MarketCategory[];
     expired?: boolean;
+    finalized?: boolean;
     limit?: number;
     offset?: number;
 }
@@ -117,8 +118,8 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
     try {
         const result = await graphqlClient.query<any>({
             query: gql`
-                query Markets($expired: Boolean, $categories: [String], $limit: Int, $offset: Int) {
-                    market: getMarkets(filters: { expired: $expired, categories: $categories, limit: $limit, offset: $offset }) {
+                query Markets($expired: Boolean, $categories: [String], $limit: Int, $offset: Int, $finalized: Boolean) {
+                    market: getMarkets(filters: { expired: $expired, categories: $categories, limit: $limit, offset: $offset, finalized: $finalized }) {
                         items {
                             pool {
                                 public
@@ -151,6 +152,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
                 categories: filters.categories,
                 limit: filters.limit,
                 offset: filters.offset,
+                finalized: filters.finalized,
             }
         });
 
@@ -168,6 +170,7 @@ export async function getResolutingMarkets(): Promise<MarketViewModel[]> {
     try {
         return getMarkets({
             expired: true,
+            finalized: true,
         });
     } catch (error) {
         console.error('[getMarketById]', error);

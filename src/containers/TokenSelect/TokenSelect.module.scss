@@ -39,5 +39,9 @@
         border: none;
         font-size: 1.25rem;
         width: 5.625rem;
+
+        &::-moz-placeholder {
+            text-align: center;
+        }
     }
 }

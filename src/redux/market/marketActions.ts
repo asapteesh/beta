@@ -23,6 +23,7 @@ export function loadMarket(id: string) {
         try {
             dispatch(setMarketLoading(true));
             dispatch(setMarketDetail(undefined));
+            dispatch(setMarketPoolTokenBalance(undefined));
 
             const market = await getMarketById(id);
 

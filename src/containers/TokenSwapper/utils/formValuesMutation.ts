@@ -11,6 +11,14 @@ export default function mutateFormValues(formValues: SwapFormValues, tokens: Tok
         return formValues;
     }
 
+    if (new Big(formValues.formattedAmountIn).lt(0)) {
+        return {
+            ...formValues,
+            formattedAmountIn: "0",
+            amountIn: "0",
+        }
+    }
+
     const poolBalances = tokens.map(token => new Big(token.poolBalance.toString()));
     const buy = !!formValues.fromToken.tokenAccountId;
     const formattedFee = DEFAULT_FEE / 100;

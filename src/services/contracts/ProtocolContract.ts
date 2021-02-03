@@ -76,7 +76,7 @@ class ProtocolContract {
             collateral_out: values.amountOut,
             outcome_target: values.fromToken.outcomeId,
             max_shares_in: new BN(values.amountIn).mul(new BN("100").add(new BN(DEFAULT_SLIPPAGE))).div(new BN("100")).toString()
-        }, MAX_GAS, STORAGE_BASE)
+        }, MAX_GAS, STORAGE_BASE.mul(new BN(2)))
     }
 
     async claimEarnings(
@@ -85,7 +85,7 @@ class ProtocolContract {
         // @ts-ignore
         this.contract.claim_earnings({
             market_id: marketId,
-        }, MAX_GAS, STORAGE_DEFAULT)
+        }, MAX_GAS, STORAGE_BASE)
     }
 }
 

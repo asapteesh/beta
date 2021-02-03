@@ -51,7 +51,7 @@ export class TokenContract {
                 payload: payload
             },
             MAX_GAS,
-            STORAGE_BASE,
+            STORAGE_BASE.mul(new BN(2)),
         );
     }
 

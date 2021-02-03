@@ -33,6 +33,13 @@ export default function MarketStatisticsConnector({
     }
 
     useEffect(() => {
+        return () => {
+            // @ts-ignore
+            clearInterval(intervalId.current);
+        }
+    }, []);
+
+    useEffect(() => {
         if (!market) return;
         if (market.id === previousMarket?.id) return;
 

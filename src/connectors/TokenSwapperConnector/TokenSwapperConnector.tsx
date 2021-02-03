@@ -24,6 +24,13 @@ export default function TokenSwapperConnector({
     const intervalId = useRef<NodeJS.Timeout>();
 
     useEffect(() => {
+        return () => {
+            // @ts-ignore
+            clearInterval(intervalId.current);
+        }
+    }, []);
+
+    useEffect(() => {
         if (!market) return;
 
         clearInterval(intervalId.current as unknown as number);

@@ -37,6 +37,12 @@ export function generateChartData(priceHistoryData: PriceHistoryData[]): Chart.C
             borderColor: `${getCssVariableValue(getColorForOutcome(outcomeId))}`,
             borderDash: [2, 5],
             cubicInterpolationMode: 'monotone',
+            hidden: false,
+            pointHitRadius: 0,
+            pointHoverRadius: 0,
+            pointRadius: 0,
+            label: '',
+            hideInLegendAndTooltip: true,
         });
     });
 

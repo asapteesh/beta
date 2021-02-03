@@ -26,5 +26,11 @@ export function validateSwapFormValues(formValues: SwapFormValues): SwapFormErro
         errors.canSubmit = false;
     }
 
+    if (formValues.amountOut) {
+        if (new Big(formValues.amountOut).lte(0)) {
+            errors.canSubmit = false;
+        }
+    }
+
     return errors;
 }

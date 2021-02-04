@@ -42,7 +42,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "release": "npm run build && standard-version",
-    "deploy-dev":"gh-pages -d build"
+    "deploy-dev": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

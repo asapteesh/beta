@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 
 import s from './MarketStatistics.module.scss';
@@ -10,6 +10,7 @@ import { Period } from '../../services/PricesHistoryService';
 
 interface Props {
     className?: string;
+    period?: Period;
     pricesHistory: PriceHistoryData[];
     onPeriodChange: (period: Period) => void;
 }
@@ -17,14 +18,13 @@ interface Props {
 export default function MarketStatistics({
     pricesHistory,
     onPeriodChange,
+    period = Period.All,
     className = '',
 }: Props): ReactElement {
-    const [selectedPeriod, setSelectedPeriod] = useState(Period.All);
 
     function handlePeriodChange(period: Period | null) {
         if (!period) return;
 
-        setSelectedPeriod(period);
         onPeriodChange(period);
     }
 
@@ -33,7 +33,7 @@ export default function MarketStatistics({
             <div className={s.timePeriodButtons}>
                 <ToggleButtons
                     exclusive
-                    value={selectedPeriod}
+                    value={period}
                     onChange={handlePeriodChange}
                     items={[
                         {

@@ -17,5 +17,6 @@ export const DEFAULT_FEE = 2; // 2%
 export const DEFAULT_SLIPPAGE = 2; // 2%
 
 export const DEFAULT_LIMIT = 100;
+export const ANALYTICS_STORAGE_KEY = 'flux_selected_period';
 
 Big.PE = 1000000;

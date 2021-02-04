@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://fluxprotocol.github.io/beta/static/css/main.c04e69ee.chunk.css",
-    "main.js": "https://fluxprotocol.github.io/beta/static/js/main.7cd18d1e.chunk.js",
-    "main.js.map": "https://fluxprotocol.github.io/beta/static/js/main.7cd18d1e.chunk.js.map",
+    "main.js": "https://fluxprotocol.github.io/beta/static/js/main.e4235d33.chunk.js",
+    "main.js.map": "https://fluxprotocol.github.io/beta/static/js/main.e4235d33.chunk.js.map",
     "runtime-main.js": "https://fluxprotocol.github.io/beta/static/js/runtime-main.2dda98de.js",
     "runtime-main.js.map": "https://fluxprotocol.github.io/beta/static/js/runtime-main.2dda98de.js.map",
     "static/js/2.370c99d3.chunk.js": "https://fluxprotocol.github.io/beta/static/js/2.370c99d3.chunk.js",
@@ -44,6 +44,6 @@
     "static/js/runtime-main.2dda98de.js",
     "static/js/2.370c99d3.chunk.js",
     "static/css/main.c04e69ee.chunk.css",
-    "static/js/main.7cd18d1e.chunk.js"
+    "static/js/main.e4235d33.chunk.js"
   ]
 }

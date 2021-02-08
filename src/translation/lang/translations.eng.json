@@ -51,8 +51,8 @@
     "market.claimEarnings.validMarket": "This market was resoluted and marked as valid. You can claim your earnings below",
     "market.claimEarnings.invalidMarket": "This market was marked as invalid, you can claim all your tokens back.",
     "market.claimEarnings.label.outcome": "Outcome",
-    "market.claimEarnings.label.balance": "Balance",
-    "market.claimEarnings.label.payout": "Payout",
+    "market.claimEarnings.label.balance": "Your balance",
+    "market.claimEarnings.label.payout": "Market payout",
 
     "market.overview.rate": "Rate",
     "market.overview.inverseRate": "Inverse rate",

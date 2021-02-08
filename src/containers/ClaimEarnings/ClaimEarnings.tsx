@@ -24,9 +24,7 @@ export default function ClaimFees({
             {!market.invalid && (
                 <>
                     <p>
-                        {trans('market.claimEarnings.validMarket', {
-                            amount: '$800',
-                        })}
+                        {trans('market.claimEarnings.validMarket')}
                     </p>
                     <FinalizedMarketOutcomes market={market} />
                 </>

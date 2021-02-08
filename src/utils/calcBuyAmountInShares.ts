@@ -28,7 +28,6 @@ export const calcBuyAmountInShares = (
   poolBalances: Big[],
   fee: number,
 ): Big => {
-  Big.DP = 0;
   if (outcomeIndex < 0 || outcomeIndex >= poolBalances.length) {
     throw new Error(`Outcome index '${outcomeIndex}' must be between 0 and '${poolBalances.length - 1}'`);
   }
@@ -36,7 +35,7 @@ export const calcBuyAmountInShares = (
 
   const investmentAmountMinusFees = mulBN(investmentAmount, 1 - fee);
   const newOutcomeBalance = poolBalances.reduce(
-    (accumulator, poolBalance, i) => 
+    (accumulator, poolBalance, i) =>
       i !== outcomeIndex
         ? ceilDiv(accumulator.mul(poolBalance), poolBalance.add(investmentAmountMinusFees))
         : accumulator.mul(poolBalance),

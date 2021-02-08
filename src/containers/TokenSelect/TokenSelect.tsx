@@ -9,6 +9,7 @@ import Token from '../../components/Token';
 import NonLinkButton from '../../components/NonLinkButton';
 import TokenDropdown from './components/TokenDropdown/TokenDropdown';
 import Error from '../../components/Error';
+import { getColorForOutcome } from '../../utils/getColorForOutcome';
 
 interface Props {
     className?: string;
@@ -54,7 +55,11 @@ export default function TokenSelect({
             </div>
             <div className={s['token-select__inputs']}>
                 <div className={s['token-select__inputs-info']}>
-                    <Token tokenName={selectedToken.tokenName} className={s['token-select__token-icon']} />
+                    <Token
+                        tokenName={selectedToken.tokenName}
+                        colorVar={getColorForOutcome(selectedToken.outcomeId)}
+                        className={s['token-select__token-icon']}
+                    />
 
                     {tokens.length === 1 && (
                         <span className={s['token-select__token-name']}>{selectedToken.tokenName}</span>

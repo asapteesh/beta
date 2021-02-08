@@ -3,6 +3,7 @@ import Big from "big.js";
 import { PoolBalanceGraphData, transformToPoolBalanceViewModel } from "./PoolBalance";
 import { AccountTokenBalance, formatCollateralToken, getCollateralTokenBalance, getCollateralTokenPrice } from '../services/CollateralTokenService';
 import { UserBalance } from "./UserBalance";
+import emojiSlice from "../utils/emojiSlice";
 
 export interface TokenViewModel {
     tokenName: string;
@@ -42,7 +43,7 @@ export function generateTokenName(tokenName: string): string {
         return (splitted[0][0] + splitted[1][0] + splitted[2][0]).toUpperCase();
     }
 
-    return tokenName.slice(0, 3).toUpperCase();
+    return emojiSlice(tokenName, 0, 3).toUpperCase();
 }
 
 /**

@@ -1,5 +1,6 @@
 import React from 'react';
 import { MarketViewModel } from '../../../../models/Market';
+import { formatCollateralToken } from '../../../../services/CollateralTokenService';
 import trans from '../../../../translation/trans';
 import { getColorForOutcome } from '../../../../utils/getColorForOutcome';
 
@@ -32,7 +33,7 @@ export default function FinalizedMarketOutcomes({
                         return (
                             <tr key={outcome?.outcomeId}>
                                 <td style={{ color: `var(${color})` }}>{outcome?.tokenName}</td>
-                                <td>{numerator}</td>
+                                <td>{formatCollateralToken(numerator)}</td>
                                 <td>{outcome?.balanceFormatted}</td>
                             </tr>
                         );

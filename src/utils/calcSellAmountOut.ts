@@ -17,7 +17,6 @@ export const calcSellAmountInCollateral = (
     poolBalances: Big[],
     fee: number,
 ): Big | null => {
-    Big.DP = 90;
     if (outcomeId < 0 || outcomeId >= poolBalances.length) {
         throw new Error(`Outcome index '${outcomeId}' must be between 0 and '${poolBalances.length - 1}'`);
     }

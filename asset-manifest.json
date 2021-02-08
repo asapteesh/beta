@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://fluxprotocol.github.io/beta/static/css/main.c04e69ee.chunk.css",
-    "main.js": "https://fluxprotocol.github.io/beta/static/js/main.10439fdf.chunk.js",
-    "main.js.map": "https://fluxprotocol.github.io/beta/static/js/main.10439fdf.chunk.js.map",
+    "main.css": "https://fluxprotocol.github.io/beta/static/css/main.61229daa.chunk.css",
+    "main.js": "https://fluxprotocol.github.io/beta/static/js/main.97dd4ead.chunk.js",
+    "main.js.map": "https://fluxprotocol.github.io/beta/static/js/main.97dd4ead.chunk.js.map",
     "runtime-main.js": "https://fluxprotocol.github.io/beta/static/js/runtime-main.2dda98de.js",
     "runtime-main.js.map": "https://fluxprotocol.github.io/beta/static/js/runtime-main.2dda98de.js.map",
-    "static/js/2.370c99d3.chunk.js": "https://fluxprotocol.github.io/beta/static/js/2.370c99d3.chunk.js",
-    "static/js/2.370c99d3.chunk.js.map": "https://fluxprotocol.github.io/beta/static/js/2.370c99d3.chunk.js.map",
+    "static/js/2.a1020753.chunk.js": "https://fluxprotocol.github.io/beta/static/js/2.a1020753.chunk.js",
+    "static/js/2.a1020753.chunk.js.map": "https://fluxprotocol.github.io/beta/static/js/2.a1020753.chunk.js.map",
     "index.html": "https://fluxprotocol.github.io/beta/index.html",
-    "static/css/main.c04e69ee.chunk.css.map": "https://fluxprotocol.github.io/beta/static/css/main.c04e69ee.chunk.css.map",
-    "static/js/2.370c99d3.chunk.js.LICENSE.txt": "https://fluxprotocol.github.io/beta/static/js/2.370c99d3.chunk.js.LICENSE.txt",
+    "static/css/main.61229daa.chunk.css.map": "https://fluxprotocol.github.io/beta/static/css/main.61229daa.chunk.css.map",
+    "static/js/2.a1020753.chunk.js.LICENSE.txt": "https://fluxprotocol.github.io/beta/static/js/2.a1020753.chunk.js.LICENSE.txt",
     "static/media/global.module.scss": "https://fluxprotocol.github.io/beta/static/media/background-wave-dark.0522574f.svg",
     "static/media/card-beer.6ac3cfd7.png": "https://fluxprotocol.github.io/beta/static/media/card-beer.6ac3cfd7.png",
     "static/media/card-crypto.bf8db90b.png": "https://fluxprotocol.github.io/beta/static/media/card-crypto.bf8db90b.png",
@@ -42,8 +42,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.2dda98de.js",
-    "static/js/2.370c99d3.chunk.js",
-    "static/css/main.c04e69ee.chunk.css",
-    "static/js/main.10439fdf.chunk.js"
+    "static/js/2.a1020753.chunk.js",
+    "static/css/main.61229daa.chunk.css",
+    "static/js/main.97dd4ead.chunk.js"
   ]
 }

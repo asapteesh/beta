@@ -30,7 +30,7 @@ export default function FinalizedMarketOutcomes({
                         const color = getColorForOutcome(index);
 
                         return (
-                            <tr>
+                            <tr key={outcome?.outcomeId}>
                                 <td style={{ color: `var(${color})` }}>{outcome?.tokenName}</td>
                                 <td>{numerator}</td>
                                 <td>{outcome?.balanceFormatted}</td>

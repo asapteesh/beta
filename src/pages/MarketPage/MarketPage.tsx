@@ -84,13 +84,13 @@ export default function MarketPage() {
                         }, {
                             element: <ExitPoolConnector key="exitPool" />,
                             label: trans('market.label.exitPool'),
-                            show: (account !== null && market?.finalized === true) || (account !== null && market?.public === true && !!poolToken && market.resolutionDate > new Date()),
+                            show: (!!poolToken && account !== null && market?.finalized === true) || (account !== null && market?.public === true && !!poolToken && market.resolutionDate > new Date()),
                             id: '5',
                         }, {
                             element: <NotLoggedInConnector key="notloggedin" />,
                             label: trans('market.label.notLoggedIn'),
                             show: account === null,
-                            id: '5',
+                            id: '6',
                         }]}
                     />
                 </ActionsCard>

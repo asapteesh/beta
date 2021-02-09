@@ -20,7 +20,7 @@ export default function ProfilePage(): ReactElement {
     }, [dispatch, account]);
 
     return (
-        <Page hasFooter={false} className={s.root} bodyClassName={s.pageBody} size="large">
+        <Page className={s.root} bodyClassName={s.pageBody} size="large">
             <UserBalancesOverviewConnector className={s.userBalances} />
             <FeesEarnedOverviewConnector className={s.feesEarned} />
         </Page>

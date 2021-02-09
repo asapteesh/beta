@@ -15,6 +15,7 @@ export const BUY = "BUY";
 export const SELL = "SELL";
 export const DEFAULT_FEE = 2; // 2%
 export const DEFAULT_SLIPPAGE = 2; // 2%
+export const NODE_ENV = process.env.NODE_ENV;
 
 export const DEFAULT_LIMIT = 100;
 export const ANALYTICS_STORAGE_KEY = 'flux_selected_period';

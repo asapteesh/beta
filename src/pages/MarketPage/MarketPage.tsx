@@ -22,12 +22,14 @@ import ExitPoolConnector from '../../connectors/ExitPoolConnector';
 import NotLoggedInConnector from '../../connectors/NotLoggedInConnector';
 
 import s from './MarketPage.module.scss';
+import useDisqus from '../../utils/hooks/useDisqus';
 
 interface RouterParams {
     marketId: string;
 }
 
 export default function MarketPage() {
+    useDisqus('marketId');
     const dispatch = useDispatch();
     const account = useSelector((store: Reducers) => store.account.account);
     const market = useSelector((store: Reducers) => store.market.marketDetail);
@@ -97,7 +99,7 @@ export default function MarketPage() {
             </div>
             <div className={s.comments}>
                 <h2>{trans('global.comments')}</h2>
-                <DiscussionEmbed shortname="flux" config={{}} />
+                <div id="disqus_thread"></div>
             </div>
         </Page>
     );

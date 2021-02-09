@@ -99,8 +99,6 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
             balances = await getBalancesForMarketByAccount(accountId, marketId);
         }
 
-        console.log('[] market -> ', market);
-
         const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id, accountId);
 
         return transformToMarketViewModel(market, collateralToken, balances);
@@ -174,6 +172,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
 export async function getMarketOutcomeTokens(marketId: string): Promise<TokenViewModel[]> {
     try {
         const result = await graphqlClient.query({
+            fetchPolicy: 'network-only',
             query: gql`
                 query MarketOutcomeTokens($id: String!) {
                     market: getMarket(marketId: $id) {

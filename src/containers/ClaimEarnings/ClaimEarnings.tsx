@@ -15,6 +15,8 @@ export default function ClaimFees({
     market,
     onClaim,
 }: Props): ReactElement {
+    const hasBalance = market.outcomeTokens.some(token => token.balance !== '0');
+
     return (
         <div>
             {market.invalid && (
@@ -39,7 +41,7 @@ export default function ClaimFees({
                 </p>
             )}
 
-            <Button disabled={Boolean(market.claim)} onClick={onClaim} className={s.confirm}>
+            <Button disabled={!hasBalance || Boolean(market.claim)} onClick={onClaim} className={s.confirm}>
                 {trans('market.action.claimEarnings')}
             </Button>
         </div>

@@ -54,11 +54,6 @@ export default function MarketStatisticsConnector({
         intervalId.current = setInterval(() => {
             dispatch(fetchPricesHistoryByMarketId(market.id, period || undefined));
         }, PRICE_HISTORY_INTERVAL_MS);
-
-        return () => {
-            // @ts-ignore
-            clearInterval(intervalId.current);
-        };
     }, [market, dispatch]);
 
     return (

@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
+import { NODE_ENV } from "../../config";
 
-export default function useDisqus(identifier: string) {
+export default function useDisqus(identifier: string, title?: string) {
     const params = useParams();
 
     useEffect(() => {
+        if (!title) return;
+
         // @ts-ignore
         window.disqus_config = function () {
             // @ts-ignore
@@ -12,6 +15,9 @@ export default function useDisqus(identifier: string) {
 
             // @ts-ignore
             this.page.identifier = NODE_ENV + params[identifier] + "_0";
+
+            // @ts-ignore
+            this.page.title = title;
         };
 
         try {
@@ -24,5 +30,5 @@ export default function useDisqus(identifier: string) {
         } catch (error) {
             console.error('[useDisuq]', error);
         }
-    }, [params, identifier]);
+    }, [params, identifier, title]);
 }

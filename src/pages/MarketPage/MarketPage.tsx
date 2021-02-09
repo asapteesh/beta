@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { DiscussionEmbed } from 'disqus-react';
@@ -23,21 +23,26 @@ import NotLoggedInConnector from '../../connectors/NotLoggedInConnector';
 
 import s from './MarketPage.module.scss';
 import useDisqus from '../../utils/hooks/useDisqus';
+import { setMarketDetail } from '../../redux/market/market';
 
 interface RouterParams {
     marketId: string;
 }
 
 export default function MarketPage() {
-    useDisqus('marketId');
     const dispatch = useDispatch();
     const account = useSelector((store: Reducers) => store.account.account);
     const market = useSelector((store: Reducers) => store.market.marketDetail);
     const poolToken = useSelector((store: Reducers) => store.market.poolTokenBalance);
     const { marketId } = useParams<RouterParams>();
+    useDisqus('marketId', market?.description);
 
     useEffect(() => {
         dispatch(loadMarket(marketId));
+
+        return () => {
+            dispatch(setMarketDetail(undefined));
+        }
     }, [dispatch, marketId]);
 
     return (

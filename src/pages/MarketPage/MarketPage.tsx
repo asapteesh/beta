@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { DiscussionEmbed } from 'disqus-react';
 import { Helmet } from 'react-helmet';
 
 import MarketHeaderConnector from '../../connectors/MarketHeaderConnector';
@@ -91,7 +90,7 @@ export default function MarketPage() {
                         }, {
                             element: <ExitPoolConnector key="exitPool" />,
                             label: trans('market.label.exitPool'),
-                            show: (!!poolToken && account !== null && market?.finalized === true) || (account !== null && market?.public === true && !!poolToken && market.resolutionDate > new Date()),
+                            show: (account !== null && market?.public === true && !!poolToken && market.resolutionDate > new Date()),
                             id: '5',
                         }, {
                             element: <NotLoggedInConnector key="notloggedin" />,

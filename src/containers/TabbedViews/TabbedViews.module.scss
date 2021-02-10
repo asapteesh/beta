@@ -1,3 +1,12 @@
+@import "../../styles/helpers/variables";
+@import "../../styles/helpers/mixins";
+
 .tabs {
     margin-bottom: 0.7813rem;
+}
+
+.tab {
+    @include for-size($default-bigger-screen-breakpoint) {
+        min-width: 0;
+    }
 }

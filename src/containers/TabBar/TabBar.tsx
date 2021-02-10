@@ -15,6 +15,7 @@ interface Props {
     activeId: string;
     onTabClick: (item: TabBarItem) => void;
     className?: string;
+    tabClassName?: string;
     variant?: 'standard' | 'scrollable' | 'fullWidth';
 }
 
@@ -23,6 +24,7 @@ export default function TabBar({
     onTabClick,
     activeId,
     variant = 'standard',
+    tabClassName = '',
     className = '',
 }: Props): ReactElement {
     return (
@@ -36,7 +38,7 @@ export default function TabBar({
                 <Tab
                     key={tab.id}
                     onClick={() => onTabClick(tab)}
-                    className={s.tab}
+                    className={classnames(s.tab, tabClassName)}
                     label={tab.label}
                     value={tab.id}
                 />

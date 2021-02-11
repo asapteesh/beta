@@ -4,6 +4,7 @@ import { MarketViewModel } from '../../models/Market';
 import { formatCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
 import { getColorForOutcome } from '../../utils/getColorForOutcome';
+import { prettyFormatNumber } from '../../utils/prettyFormatNumber';
 
 import s from './MarketOpinionCard.module.scss';
 
@@ -24,16 +25,16 @@ export default function MarketOpinionCard({
                 {market.outcomeTokens.map((outcome, index) => (
                     <div key={outcome.outcomeId} className={s['outcome']}>
                         <div className={s['outcome-label-wrapper']}>
-                            <div style={{ backgroundColor: `var(${getColorForOutcome(index)})` }} className={s['color-label']} />
-                            <span>{outcome.tokenName}</span>
+                            <div style={{ backgroundColor: `var(${getColorForOutcome(index)})` }} className={s.colorLabel} />
+                            <span className={s.tokenName}>{outcome.tokenName}</span>
                         </div>
-                        <span>{outcome.odds.mul(100).toNumber().toPrecision(3)}%</span>
+                        <span className={s.percentage}>{outcome.odds.mul(100).toNumber().toFixed(2)}%</span>
                     </div>
                 ))}
             </div>
             <div className={s['volume-wrapper']}>
                 <span>{trans('market.label.totalVolume')}</span>
-                <span>{formatCollateralToken(market.volume)}</span>
+                <span>{prettyFormatNumber(formatCollateralToken(market.volume))}</span>
             </div>
         </div>
     );

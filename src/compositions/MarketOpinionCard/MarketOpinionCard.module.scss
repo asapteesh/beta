@@ -34,9 +34,13 @@
     align-items: center;
 }
 
-.color-label {
+.colorLabel {
     height: 0.5rem;
-    width: 1.5rem;
+    min-width: 1.5rem;
     border-radius: 0.3125rem;
     margin-right: 0.625rem;
+}
+
+.tokenName {
+    max-width: 85%;
 }

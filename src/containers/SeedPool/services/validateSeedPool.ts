@@ -1,14 +1,11 @@
 import Big from "big.js";
 import { MarketViewModel } from "../../../models/Market";
-import { TokenViewModel } from "../../../models/TokenViewModel";
-import { toCollateralToken } from "../../../services/CollateralTokenService";
 import { SeedPoolFormValues } from "../../../services/PoolService";
 import trans from "../../../translation/trans";
 
 export interface SeedPoolFormErrors {
     outcomePercentages: string[];
     canSeed: boolean;
-    canPublish: boolean;
     message: string;
     mainTokenInput: string;
 }
@@ -17,7 +14,6 @@ export function validateSeedPool(formValues: SeedPoolFormValues, market: MarketV
     const errors: SeedPoolFormErrors = {
         outcomePercentages: [],
         canSeed: true,
-        canPublish: true,
         message: '',
         mainTokenInput: '',
     }
@@ -55,10 +51,6 @@ export function validateSeedPool(formValues: SeedPoolFormValues, market: MarketV
         }
     } else {
         errors.canSeed = false;
-    }
-
-    if (market.seedNonce === '1') {
-        errors.canPublish = false;
     }
 
     return errors;

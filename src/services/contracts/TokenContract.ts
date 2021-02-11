@@ -15,11 +15,11 @@ export class TokenContract {
         });
     }
 
-    async registerAccount() {
+    async registerAccount(accountId = this.contract.account.accountId) {
         // @todo This is very inconvenient for UX
         // @ts-ignore
         return this.contract.register_account({
-            account_id: this.contract.account.accountId,
+            account_id: accountId,
         },
             MAX_GAS,
             STORAGE_DEFAULT,
@@ -55,32 +55,17 @@ export class TokenContract {
         );
     }
 
-    async joinPool(marketId: string, amountIn: string) {
+    async addLiquidity(marketId: string, amountIn: string, weightIndication: string[] = []) {
         let payload = JSON.stringify({
-            function: "join_pool",
+            function: "add_liquidity",
             args: {
                 market_id: marketId,
+                weight_indication: weightIndication.length ? weightIndication : null,
             }
         });
 
-        // @ts-ignore
-        return this.contract.transfer_with_vault({
-                receiver_id: PROTOCOL_ACCOUNT_ID,
-                amount: amountIn,
-                payload: payload
-            },
-            MAX_GAS,
-            STORAGE_DEFAULT,
-        );
-    }
-
-    async publishPool(marketId: string, amountIn: string) {
-        let payload = JSON.stringify({
-            function: "publish",
-            args: {
-                market_id: marketId,
-            }
-        });
+        // Each weight is used seperatly in near requiring more storage
+        const storageRequired = new BN('80000000000000000000000').mul(new BN(weightIndication.length));
 
         // @ts-ignore
         return this.contract.transfer_with_vault({
@@ -89,7 +74,7 @@ export class TokenContract {
             payload: payload
         },
             MAX_GAS,
-            STORAGE_BASE,
+            storageRequired,
         );
     }
 }

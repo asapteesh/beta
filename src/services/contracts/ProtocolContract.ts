@@ -12,7 +12,7 @@ class ProtocolContract {
     constructor(account: Account) {
         this.contract = new Contract(account, PROTOCOL_ACCOUNT_ID, {
             viewMethods: [],
-            changeMethods: ['create_market', 'seed_pool', 'sell', 'exit_pool', 'claim_earnings'],
+            changeMethods: ['create_market', 'sell', 'exit_pool', 'claim_earnings'],
         });
     }
 
@@ -36,22 +36,6 @@ class ProtocolContract {
             collateral_token_id: FUNGIBLE_TOKEN_ACCOUNT_ID,
             categories,
             swap_fee: toCollateralToken(DEFAULT_FEE.toString(), 16),
-        }, MAX_GAS, storageRequired);
-    }
-
-    async seedPool(
-        marketId: string,
-        totalIn: string,
-        denormWeights: string[],
-    ): Promise<void> {
-        // Each weight is used seperatly in near requiring more storage
-        const storageRequired = new BN('80000000000000000000000').mul(new BN(denormWeights.length));
-
-        // @ts-ignore
-        this.contract.seed_pool({
-            market_id: marketId,
-            total_in: totalIn,
-            denorm_weights: denormWeights,
         }, MAX_GAS, storageRequired);
     }
 

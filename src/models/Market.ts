@@ -27,8 +27,6 @@ export interface GraphMarketResponse {
     payout_numerator?: string[] | null;
     claimed_earnings?: GraphClaimResponse;
     pool: {
-        seed_nonce: string;
-        public: boolean;
         owner: string;
         collateral_token_id: string;
         pool_balances: {
@@ -47,7 +45,6 @@ export interface GraphMarketResponse {
 export interface MarketViewModel {
     id: string;
     finalized: boolean;
-    public: boolean;
     owner: string;
     description: string;
     resolutionDate: Date;
@@ -58,7 +55,6 @@ export interface MarketViewModel {
     outcomeTokens: TokenViewModel[];
     collateralToken: TokenViewModel;
     invalid: boolean;
-    seedNonce: string;
     payoutNumerator: string[] | null;
     claim?: ClaimViewModel;
     poolTokenInfo: {
@@ -83,11 +79,9 @@ export async function transformToMarketViewModel(
         finalized: graphResponse.finalized,
         owner: graphResponse.pool.owner,
         resolutionDate: new Date(parseInt(graphResponse.end_time)),
-        public: graphResponse.pool.public,
         volume: graphResponse.volume,
         collateralTokenId: graphResponse.pool.collateral_token_id,
         collateralToken,
-        seedNonce: graphResponse.pool.seed_nonce || '1',
         invalid: graphResponse.finalized && payoutNumerator === null,
         payoutNumerator,
         claim: graphResponse.claimed_earnings ? transformToClaimViewModel(graphResponse.claimed_earnings) : undefined,

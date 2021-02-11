@@ -8,26 +8,20 @@ export interface SeedPoolFormValues {
     mainTokenInputFormatted: string;
 }
 
-export async function seedPool(marketId: string, values: SeedPoolFormValues) {
-    const protocol = await createProtocolContract();
+export async function seedPool(marketId: string, tokenId: string, values: SeedPoolFormValues) {
+    const token = await createTokenContract(tokenId);
     const weights = calcDistributionHint(values.outcomePercentages);
 
-    protocol.seedPool(
+    token.addLiquidity(
         marketId,
         values.mainTokenInput,
         weights.map(outcome => outcome.toString())
     );
 }
 
-export async function publishPool(marketId: string, amountIn: string, tokenId: string) {
-    const token = await createTokenContract(tokenId);
-
-    token.publishPool(marketId, amountIn);
-}
-
 export async function joinPool(marketId: string, amountIn: string, tokenId: string) {
     const token = await createTokenContract(tokenId);
-    token.joinPool(marketId, amountIn);
+    token.addLiquidity(marketId, amountIn);
 }
 
 export async function exitPool(marketId: string, amountIn: string) {

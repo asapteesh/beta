@@ -55,9 +55,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
                 query Market($id: String!, $accountId: String) {
                     market: getMarket(marketId: $id) {
                         pool {
-                            public
                             owner
-                            seed_nonce
                             collateral_token_id
                             pool_balances {
                                 weight
@@ -125,10 +123,8 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
                     market: getMarkets(filters: { expired: $expired, categories: $categories, limit: $limit, offset: $offset, finalized: $finalized }) {
                         items {
                             pool {
-                                public
                                 owner
                                 collateral_token_id
-                                seed_nonce
                                 pool_balances {
                                     weight
                                     outcome_id

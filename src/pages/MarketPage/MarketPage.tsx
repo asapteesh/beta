@@ -36,6 +36,9 @@ export default function MarketPage() {
     const { marketId } = useParams<RouterParams>();
     useDisqus('marketId', market?.description);
 
+    const hasMarketLiquidity = market?.poolTokenInfo.totalSupply !== '0';
+    const isExpired = market?.resolutionDate ? market.resolutionDate <= new Date() : false;
+
     useEffect(() => {
         dispatch(loadMarket(marketId));
 
@@ -65,12 +68,12 @@ export default function MarketPage() {
                         items={[{
                             element: <TokenSwapperConnector key="tokenswapper" />,
                             label: trans('market.label.swap'),
-                            show: account !== null && market?.public === true && market?.finalized === false && market.resolutionDate > new Date(),
+                            show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity,
                             id: '0',
                         }, {
                             element: <LiquidityProviderConnector key="liquidity" />,
                             label: trans('market.label.liquidity'),
-                            show: account !== null && market?.public === true && market?.finalized === false && market.resolutionDate > new Date(),
+                            show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity,
                             id: '1',
                         }, {
                             element: <ClaimEarningsConnector key="claimEarnings" />,
@@ -80,17 +83,17 @@ export default function MarketPage() {
                         }, {
                             element: <SeedPoolConnector key="seedpool" />,
                             label: trans('market.label.seedPool'),
-                            show: account !== null && market?.finalized === false && market.public === false && market.resolutionDate > new Date(),
+                            show: account !== null && market?.finalized === false && !isExpired && !hasMarketLiquidity,
                             id: '3',
                         }, {
                             element: <MarketClosed key="marketClosed" />,
                             label: trans('market.label.marketClosed'),
-                            show: market?.finalized === false && market.resolutionDate <= new Date(),
+                            show: market?.finalized === false && isExpired,
                             id: '4',
                         }, {
                             element: <ExitPoolConnector key="exitPool" />,
                             label: trans('market.label.exitPool'),
-                            show: (account !== null && market?.public === true && !!poolToken && market.resolutionDate > new Date()),
+                            show: account !== null && hasMarketLiquidity && !!poolToken && !isExpired,
                             id: '5',
                         }, {
                             element: <NotLoggedInConnector key="notloggedin" />,

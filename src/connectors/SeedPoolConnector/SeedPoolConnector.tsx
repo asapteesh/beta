@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SeedPool from '../../containers/SeedPool';
 import { SeedPoolFormValues } from '../../services/PoolService';
 import { Reducers } from '../../redux/reducers';
-import { publishPoolAction, seedPoolAction } from '../../redux/market/marketActions';
+import { seedPoolAction } from '../../redux/market/marketActions';
 
 export default function SeedPoolConnector() {
     const dispatch = useDispatch();
@@ -13,13 +13,7 @@ export default function SeedPoolConnector() {
     const handleSeedPool = useCallback((formValues: SeedPoolFormValues) => {
         if (!market) return;
 
-        dispatch(seedPoolAction(market.id, formValues));
-    }, [dispatch, market]);
-
-    const handleFinalize = useCallback(() => {
-        if (!market) return;
-
-        dispatch(publishPoolAction(market.id, market.poolTokenInfo.totalSupply, market.collateralTokenId));
+        dispatch(seedPoolAction(market.id, market.collateralTokenId, formValues));
     }, [dispatch, market]);
 
     if (!market) {
@@ -32,7 +26,6 @@ export default function SeedPoolConnector() {
             market={market}
             mainToken={market.collateralToken}
             onSeedPool={handleSeedPool}
-            onFinalizePool={handleFinalize}
         />
     );
 }

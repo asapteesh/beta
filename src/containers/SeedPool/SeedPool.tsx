@@ -7,7 +7,6 @@ import TextInput from '../../components/TextInput';
 import { Account } from '../../models/Account';
 import { MarketViewModel } from '../../models/Market';
 import trans from '../../translation/trans';
-import WrongOwnerMessage from './components/WrongOwnerMessage/WrongOwnerMessage';
 import createDefaultSeedPoolFormValues from './services/createDefaultSeedPoolFormValues';
 import { validateSeedPool } from './services/validateSeedPool';
 import { TokenViewModel } from '../../models/TokenViewModel';
@@ -24,7 +23,6 @@ interface Props {
     mainToken: TokenViewModel;
     account: Account | null,
     onSeedPool: (values: SeedPoolFormValues) => void;
-    onFinalizePool: () => void;
 }
 
 export default function SeedPool({
@@ -32,7 +30,6 @@ export default function SeedPool({
     account,
     mainToken,
     onSeedPool,
-    onFinalizePool,
 }: Props) {
     const [formValues, setFormValues] = useState(createDefaultSeedPoolFormValues());
 
@@ -73,69 +70,58 @@ export default function SeedPool({
 
     return (
         <div>
-            {(account?.accountId !== market.owner) && <WrongOwnerMessage market={market} />}
+            <form>
+                <p>{trans('seedPool.explanation', { tokenName: mainToken.tokenName })}</p>
 
-            {(account?.accountId === market.owner && (
-                <form>
-                    <p>{trans('seedPool.explanation')}</p>
-
-                    <div className={s.inputWrapper}>
-                        <div className={s.tokenTitles}>
-                            <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                                {trans('global.balance', {}, true)}: {mainToken.balanceFormatted}
-                            </TextButton>
-                        </div>
-
-                        <TokenSelect
-                            onTokenSwitch={() => {}}
-                            value={formValues.mainTokenInputFormatted}
-                            tokens={[mainToken]}
-                            selectedToken={mainToken}
-                            onValueChange={handleMainTokenChange}
-                            placeholder="1000"
-                        />
-                        <Error error={errors.mainTokenInput} />
+                <div className={s.inputWrapper}>
+                    <div className={s.tokenTitles}>
+                        <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
+                            {trans('global.balance', {}, true)}: {mainToken.balanceFormatted}
+                        </TextButton>
                     </div>
 
-                    <h3>{trans('seedPool.weightsTitle')}</h3>
-                    {formValues.outcomePercentages.map((percentage, index) => (
-                        <div className={s.inputWrapper} key={index}>
-                            <Label text={market.outcomeTokens.find(outcome => outcome.outcomeId === index)?.tokenName || ""} />
-                            <TextInput
-                                value={percentage.toString()}
-                                type="number"
-                                onChange={(value) => handlePercentageChange(index, value)}
-                                error={!!errors.outcomePercentages[index]}
-                                helperText={errors.outcomePercentages[index]}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <span className={s.adornement}>%</span>
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </div>
-                    ))}
+                    <TokenSelect
+                        onTokenSwitch={() => {}}
+                        value={formValues.mainTokenInputFormatted}
+                        tokens={[mainToken]}
+                        selectedToken={mainToken}
+                        onValueChange={handleMainTokenChange}
+                        placeholder="1000"
+                    />
+                    <Error error={errors.mainTokenInput} />
+                </div>
 
-                    {!errors.canSeed && <p>{errors.message}</p>}
+                <h3>{trans('seedPool.weightsTitle')}</h3>
+                {formValues.outcomePercentages.map((percentage, index) => (
+                    <div className={s.inputWrapper} key={index}>
+                        <Label text={market.outcomeTokens.find(outcome => outcome.outcomeId === index)?.tokenName || ""} />
+                        <TextInput
+                            value={percentage.toString()}
+                            type="number"
+                            onChange={(value) => handlePercentageChange(index, value)}
+                            error={!!errors.outcomePercentages[index]}
+                            helperText={errors.outcomePercentages[index]}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <span className={s.adornement}>%</span>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                    </div>
+                ))}
 
-                    <Button
-                        className={s.confirmButton}
-                        disabled={!errors.canSeed}
-                        onClick={() => onSeedPool(formValues)}
-                    >
-                        {market.seedNonce === '1' ? trans('seedPool.action.submit') : trans('seedPool.action.reSeed')}
-                    </Button>
-                    <Button
-                        className={s.confirmButton}
-                        disabled={!errors.canPublish}
-                        onClick={() => onFinalizePool()}
-                    >
-                        {trans('seedPool.action.finalize')}
-                    </Button>
-                </form>
-            ))}
+                {!errors.canSeed && <p>{errors.message}</p>}
+
+                <Button
+                    className={s.confirmButton}
+                    disabled={!errors.canSeed}
+                    onClick={() => onSeedPool(formValues)}
+                >
+                    {trans('seedPool.action.submit')}
+                </Button>
+            </form>
         </div>
     );
 }

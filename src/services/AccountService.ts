@@ -1,36 +1,31 @@
 import { gql } from "@apollo/client";
-import { NULL_CONTRACT } from "../config";
 import { Account } from "../models/Account";
 import { EarnedFeesGraphData, GraphAcountBalancesResponse, PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { GraphUserBalanceResponse, transformToUserBalance, UserBalance } from "../models/UserBalance";
-import trans from "../translation/trans";
 import { graphqlClient } from "./GraphQLService";
-import { connectWallet } from "./WalletService";
+import { connectSdk } from "./WalletService";
 
 export async function signUserIn() {
-    const connectedWallet = await connectWallet();
-
-    connectedWallet.requestSignIn(NULL_CONTRACT, trans('global.appName'));
+    const sdk = await connectSdk();
+    sdk.signIn();
 }
 
 export async function getAccountInfo(): Promise<Account | null> {
-    const connectedWallet = await connectWallet();
+    const sdk = await connectSdk();
 
-    if (!connectedWallet.isSignedIn()) {
+    if (!sdk.isSignedIn()) {
         return null;
     }
 
-    const nearAccount = connectedWallet.account();
-
     return {
-        accountId: nearAccount.accountId,
-        balance: (await nearAccount.getAccountBalance()).available,
+        accountId: sdk.getAccountId() ?? '',
+        balance: (await sdk.getNearBalance()).available,
     };
 }
 
 export async function signUserOut() {
-    const connectedWallet = await connectWallet();
-    connectedWallet.signOut();
+    const sdk = await connectSdk();
+    sdk.signOut();
 }
 
 interface AccountBalancesInfo {

@@ -4,8 +4,9 @@ import {
     WalletConnection,
     keyStores,
 } from "near-api-js";
+import FluxSdk from 'amm-sdk';
 
-import { NULL_CONTRACT } from '../config';
+import { API_URL, NULL_CONTRACT, PROTOCOL_ACCOUNT_ID } from '../config';
 
 export interface ConnectConfig {
     accountId?: string;
@@ -68,4 +69,12 @@ export async function connectWallet(): Promise<WalletConnection> {
 
     walletConnection = new WalletConnection(near, NULL_CONTRACT);
     return walletConnection;
+}
+
+let sdkInstance = new FluxSdk();
+
+export async function connectSdk(): Promise<FluxSdk> {
+    await sdkInstance.connect();
+    console.log('[] sdkInstance -> ', sdkInstance);
+    return sdkInstance;
 }

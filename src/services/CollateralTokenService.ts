@@ -3,8 +3,10 @@ import Big from 'big.js';
 
 import { FUNGIBLE_TOKEN_ACCOUNT_ID } from "../config";
 import { isFetchResultSuccesful } from "../models/FetchResult";
+import { TokenMetadata } from '../models/TokenMetadata';
+import cache from '../utils/cache';
 import { getTokenPriceByTicker } from "./TokenPriceService";
-import { connectNear } from "./WalletService";
+import { connectNear, connectSdk } from "./WalletService";
 
 export function formatCollateralToken(amount: string, decimals = 18, dp = 2): string {
     const denominator = new Big(10).pow(decimals);
@@ -21,7 +23,7 @@ export interface AccountTokenBalance {
     balanceFormatted: string;
 }
 
-export async function getCollateralTokenBalance(tokenAccountId: string, accountId: string): Promise<AccountTokenBalance> {
+export async function getCollateralTokenBalance(tokenAccountId: string, accountId: string): Promise<string> {
     try {
         const near = await connectNear();
         const account = await near.account(accountId);
@@ -39,16 +41,10 @@ export async function getCollateralTokenBalance(tokenAccountId: string, accountI
             account_id: accountId,
         });
 
-        return {
-            balance: result,
-            balanceFormatted: formatCollateralToken(result),
-        };
+        return result;
     } catch (error) {
         console.error('[getCollateralTokenBalance]', error);
-        return {
-            balance: '0',
-            balanceFormatted: '0',
-        };
+        return '0';
     }
 }
 
@@ -62,4 +58,33 @@ export async function getCollateralTokenPrice(tokenAccountId: string): Promise<n
     }
 
     return 0;
+}
+
+
+export async function getCollateralTokenMetadata(collateralTokenId: string): Promise<TokenMetadata> {
+    const defaultMetadata = {
+        decimals: 18,
+        name: collateralTokenId,
+        reference: '',
+        symbol: collateralTokenId,
+        version: '0',
+        collateralTokenId,
+    };
+
+    try {
+        if (!collateralTokenId) return defaultMetadata;
+        const metadata = await cache(`metadata_${collateralTokenId}`, async () => {
+            const sdk = await connectSdk();
+            return sdk.getTokenMetadata(collateralTokenId);
+        });
+
+        return {
+            ...metadata,
+            collateralTokenId,
+        };
+    } catch (error) {
+        console.error('[getCollateralTokenMetadata]', error);
+
+        return defaultMetadata;
+    }
 }

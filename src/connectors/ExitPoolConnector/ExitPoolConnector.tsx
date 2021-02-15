@@ -8,6 +8,7 @@ import { Reducers } from '../../redux/reducers';
 
 export default function ExitPoolConnector() {
     const poolToken = useSelector((store: Reducers) => store.market.poolTokenBalance);
+    const market = useSelector((store: Reducers) => store.market.marketDetail);
     const dispatch = useDispatch();
 
     const handleExitPool = useCallback((formValues: ExitPoolFormValues) => {
@@ -16,13 +17,14 @@ export default function ExitPoolConnector() {
         dispatch(exitPoolAction(poolToken.marketId, formValues.amountIn));
     }, [poolToken, dispatch]);
 
-    if (!poolToken) {
+    if (!poolToken || !market) {
         return <div />
     }
 
     return (
         <ExitPool
             poolToken={poolToken}
+            market={market}
             onExitPool={handleExitPool}
         />
     );

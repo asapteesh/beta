@@ -50,7 +50,7 @@ export default function ClaimFees({
             {!market.claim && poolToken && (
                 <p>
                     {trans('exitPool.label.feesEarned', {
-                        amount: formatCollateralToken(poolToken.fees, 18, 8),
+                        amount: formatCollateralToken(poolToken.fees, market.collateralToken.decimals, 8),
                     })}
                 </p>
             )}

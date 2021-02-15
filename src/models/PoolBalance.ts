@@ -21,7 +21,6 @@ export interface PoolBalanceGraphData {
 }
 
 export function transformToPoolBalanceViewModel(response: PoolBalanceGraphData[], outcomeTags: string[]): PoolBalanceViewModel[] {
-    // @todo write this in a simpler way (start with outcome tags and work your way back)
     if (!response.length) {
         return outcomeTags.map((tag, index) => ({
             outcomeId: index,

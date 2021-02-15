@@ -84,7 +84,7 @@ export async function transformToMarketViewModel(
         collateralToken,
         invalid: graphResponse.finalized && payoutNumerator === null,
         payoutNumerator,
-        claim: graphResponse.claimed_earnings ? transformToClaimViewModel(graphResponse.claimed_earnings) : undefined,
+        claim: graphResponse.claimed_earnings ? transformToClaimViewModel(graphResponse.claimed_earnings, collateralToken) : undefined,
         outcomeTokens: transformToTokenViewModels(
             graphResponse.outcome_tags,
             graphResponse.pool.pool_balances as any,

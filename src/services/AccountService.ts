@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 import { Account } from "../models/Account";
 import { EarnedFeesGraphData, GraphAcountBalancesResponse, PoolToken, transformToPoolToken } from "../models/PoolToken";
 import { GraphUserBalanceResponse, transformToUserBalance, UserBalance } from "../models/UserBalance";
+import { getCollateralTokenMetadata } from "./CollateralTokenService";
 import { graphqlClient } from "./GraphQLService";
 import { connectSdk } from "./WalletService";
 
@@ -46,6 +47,10 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
                             balance
                             market {
                                 description
+
+                                pool {
+                                    collateral_token_id
+                                }
                             }
                         }
                         balances {
@@ -69,10 +74,16 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
         });
 
         const accountBalances: GraphAcountBalancesResponse = result.data.account;
+        const tokensMetadata = await Promise.all(accountBalances.earned_fees.map(item => getCollateralTokenMetadata(item.market?.pool.collateral_token_id || '')));
+
+        const poolTokens = accountBalances.earned_fees.map((data) => {
+            const tokenMetadata = tokensMetadata.find(metadata => metadata.collateralTokenId === data.market?.pool.collateral_token_id);
+            return transformToPoolToken(data, tokenMetadata!);
+        });
 
         return {
-            poolTokens: accountBalances.earned_fees.map(transformToPoolToken),
-            marketBalances: accountBalances.balances.map(transformToUserBalance),
+            poolTokens,
+            marketBalances: accountBalances.balances.map((data) => transformToUserBalance(data)),
         };
     } catch (error) {
         console.error('[getPoolTokensByAccountId]', error);
@@ -93,6 +104,10 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
                             balance
                             outcome_id
                             pool_id,
+
+                            market {
+                                outcome_tags
+                            }
                         }
                     }
                 }
@@ -104,7 +119,7 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
         });
 
         const data: GraphUserBalanceResponse = result.data.account;
-        return data.balances.map(transformToUserBalance);
+        return data.balances.map((balance) => transformToUserBalance(balance));
 } catch (error) {
     console.error('[getBalancesForMarketByAccount]', error);
         return [];
@@ -122,6 +137,12 @@ export async function getPoolBalanceForMarketByAccount(accountId: string, market
                             fees
                             outcomeId
                             poolId
+
+                            market {
+                                pool {
+                                    collateral_token_id
+                                }
+                            }
                         }
                     }
                 }
@@ -138,7 +159,9 @@ export async function getPoolBalanceForMarketByAccount(accountId: string, market
             return null;
         }
 
-        return transformToPoolToken(data[0]);
+        const collateralTokenMetadata = await getCollateralTokenMetadata(data[0].market?.pool.collateral_token_id || '');
+
+        return transformToPoolToken(data[0], collateralTokenMetadata);
     } catch (error) {
         console.error('[getBalancesForMarketByAccount]', error);
         return null;

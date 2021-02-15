@@ -1,3 +1,4 @@
+import { getCollateralTokenMetadata } from "../services/CollateralTokenService";
 import trans from "../translation/trans";
 
 export interface UserBalance {
@@ -19,6 +20,9 @@ export interface GraphUserBalancesItem {
         finalized: boolean;
         end_time: string;
         payout_numerator: string[] | null;
+        pool: {
+            collateral_token_id: string;
+        }
     }
 }
 

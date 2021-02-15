@@ -33,7 +33,7 @@ export default function FinalizedMarketOutcomes({
                         return (
                             <tr key={outcome?.outcomeId}>
                                 <td style={{ color: `var(${color})` }}>{outcome?.tokenName}</td>
-                                <td>{formatCollateralToken(numerator)}</td>
+                                <td>{formatCollateralToken(numerator, market.collateralToken.decimals)}</td>
                                 <td>{outcome?.balanceFormatted}</td>
                             </tr>
                         );

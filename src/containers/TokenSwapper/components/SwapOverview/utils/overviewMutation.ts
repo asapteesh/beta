@@ -20,12 +20,13 @@ export default function mutateFormValues(formValues: SwapFormValues): OverviewVa
         }
     }
 
+    const collateralToken = formValues.fromToken.isCollateralToken ? formValues.fromToken : formValues.toToken;
     const amountInBN = new Big(formValues.amountIn);
     const amountOutBN = new Big(formValues.amountOut);
-    const rateInOut = formatCollateralToken(amountInBN.mul(ONE.toString()).div(amountOutBN).toString());
-    const rateOutIn = formatCollateralToken(amountOutBN.mul(ONE.toString()).div(amountInBN).toString());
+    const rateInOut = formatCollateralToken(amountInBN.mul(ONE.toString()).div(amountOutBN).toString(), formValues.fromToken.decimals);
+    const rateOutIn = formatCollateralToken(amountOutBN.mul(ONE.toString()).div(amountInBN).toString(), formValues.toToken.decimals);
     const feedAmount = formValues.type === BUY ? formValues.amountIn : formValues.amountOut;
-    const feePaid = formatCollateralToken(new Big(feedAmount).mul(new Big(DEFAULT_FEE)).div(new Big("100")).toString());
+    const feePaid = formatCollateralToken(new Big(feedAmount).mul(new Big(DEFAULT_FEE)).div(new Big("100")).toString(), collateralToken.decimals);
 
     return {
         rateInOut,

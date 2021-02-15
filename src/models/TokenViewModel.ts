@@ -1,7 +1,7 @@
 import Big from "big.js";
 
 import { PoolBalanceGraphData, transformToPoolBalanceViewModel } from "./PoolBalance";
-import { AccountTokenBalance, formatCollateralToken, getCollateralTokenBalance, getCollateralTokenPrice } from '../services/CollateralTokenService';
+import { AccountTokenBalance, formatCollateralToken, getCollateralTokenBalance, getCollateralTokenMetadata, getCollateralTokenPrice } from '../services/CollateralTokenService';
 import { UserBalance } from "./UserBalance";
 import emojiSlice from "../utils/emojiSlice";
 
@@ -18,6 +18,7 @@ export interface TokenViewModel {
     weight: number;
     odds: Big;
     decimals: number;
+    isCollateralToken: boolean;
 }
 
 /**
@@ -59,6 +60,7 @@ export function transformToTokenViewModels(
     tags: string[],
     poolBalanceData: PoolBalanceGraphData[] = [],
     userBalances: UserBalance[],
+    isCollateralToken = false,
 ): TokenViewModel[] {
     const poolBalances = transformToPoolBalanceViewModel(poolBalanceData, tags);
 
@@ -68,7 +70,7 @@ export function transformToTokenViewModels(
 
         return {
             balance: userBalance?.balance || '0',
-            balanceFormatted: formatCollateralToken(userBalance?.balance || '0'),
+            balanceFormatted: formatCollateralToken(userBalance?.balance ?? '0', 18),
             outcomeId,
             price: poolBalance?.price || 0,
             tokenSymbol: generateTokenName(outcome),
@@ -78,6 +80,7 @@ export function transformToTokenViewModels(
             weight: poolBalance?.weight || 0,
             decimals: 18,
             odds: poolBalance?.odds || new Big(0),
+            isCollateralToken,
         };
     });
 }
@@ -92,27 +95,29 @@ export function transformToTokenViewModels(
  * @return {Promise<TokenViewModel>}
  */
 export async function transformToMainTokenViewModel(collateralTokenAccountId: string, accountId?: string, fetchPrice = true): Promise<TokenViewModel> {
-    let balances: AccountTokenBalance = {
-        balance: '0',
-        balanceFormatted: '0',
-    };
+    let balance = '0';
+
+    const metadataRequest = getCollateralTokenMetadata(collateralTokenAccountId);
 
     if (accountId) {
-        balances = await getCollateralTokenBalance(collateralTokenAccountId, accountId);
+        balance = await getCollateralTokenBalance(collateralTokenAccountId, accountId);
     }
 
+    const metadata = await metadataRequest;
+
     return {
-        balance: balances.balance,
-        balanceFormatted: balances.balanceFormatted,
-        decimals: 18,
+        balance,
+        balanceFormatted: formatCollateralToken(balance, metadata.decimals),
+        decimals: metadata.decimals,
         outcomeId: NaN,
         poolWeight: new Big(0),
         price: fetchPrice ? await getCollateralTokenPrice(collateralTokenAccountId) : 0,
-        tokenName: collateralTokenAccountId,
-        tokenSymbol: collateralTokenAccountId,
+        tokenName: metadata.name,
+        tokenSymbol: metadata.symbol,
         poolBalance: "",
         weight: 0,
         tokenAccountId: collateralTokenAccountId,
-        odds: new Big(0)
+        odds: new Big(0),
+        isCollateralToken: true,
     };
 }

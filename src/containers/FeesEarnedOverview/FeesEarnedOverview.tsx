@@ -45,6 +45,7 @@ export default function FeesEarnedOverview({
                                 </Link>
                             </td>
                             <td>
+                                {/** TODO: set the decimals */}
                                 <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
                                     {formatCollateralToken(poolToken.fees)}
                                 </Link>

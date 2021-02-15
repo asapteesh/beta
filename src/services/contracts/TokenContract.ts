@@ -16,7 +16,6 @@ export class TokenContract {
     }
 
     async registerAccount(accountId = this.contract.account.accountId) {
-        // @todo This is very inconvenient for UX
         // @ts-ignore
         return this.contract.register_account({
             account_id: accountId,

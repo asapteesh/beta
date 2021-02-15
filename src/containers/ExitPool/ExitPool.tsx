@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Error from '../../components/Error';
 import TextButton from '../../components/TextButton';
+import { MarketViewModel } from '../../models/Market';
 import { PoolToken, transformPoolTokenToTokenViewModel } from '../../models/PoolToken';
 import { formatCollateralToken, toCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
@@ -12,11 +13,13 @@ import createDefaultExitPoolFormValues, { ExitPoolFormValues } from './services/
 import validateExitPool from './services/validateExitPool';
 
 interface Props {
+    market: MarketViewModel;
     poolToken: PoolToken;
     onExitPool: (formValues: ExitPoolFormValues) => void;
 }
 
 export default function ExitPool({
+    market,
     poolToken,
     onExitPool,
 }: Props) {
@@ -68,7 +71,7 @@ export default function ExitPool({
             <Error error={errors.amountIn} />
             <p>
                 {trans('exitPool.label.feesEarned', {
-                    amount: formatCollateralToken(poolToken.fees, 18, 8),
+                    amount: formatCollateralToken(poolToken.fees, market.collateralToken.decimals, 8),
                 })}
             </p>
             <Button onClick={handleSubmit} className={s.confirm} disabled={!errors.canSubmit}>

@@ -47,7 +47,7 @@ export default function mutateFormValues(formValues: SwapFormValues, tokens: Tok
 
     return {
         ...formValues,
-        formattedAmountOut: formatCollateralToken(amountOut.toString()),
+        formattedAmountOut: formatCollateralToken(amountOut.toString(), formValues.toToken.decimals),
         amountOut: amountOut.round(0, 0).toString()
     };
 }

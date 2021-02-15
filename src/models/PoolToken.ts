@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import { formatCollateralToken } from '../services/CollateralTokenService';
 import trans from '../translation/trans';
+import { TokenMetadata } from './TokenMetadata';
 import { TokenViewModel } from './TokenViewModel';
 import { GraphUserBalancesItem } from './UserBalance';
 
@@ -11,6 +12,9 @@ export interface EarnedFeesGraphData {
     balance: string;
     market?: {
         description: string;
+        pool: {
+            collateral_token_id: string;
+        }
     }
 }
 
@@ -23,21 +27,23 @@ export interface PoolToken {
     outcomeId: number;
     poolId: string;
     fees: string;
+    collateralTokenDecimals: number;
     balance: string;
     balanceFormatted: string;
     marketDescription: string;
     marketId: string;
 }
 
-export function transformToPoolToken(graphData: EarnedFeesGraphData): PoolToken {
+export function transformToPoolToken(graphData: EarnedFeesGraphData, collateralTokenMetadata: TokenMetadata): PoolToken {
     return {
-        balanceFormatted: formatCollateralToken(graphData.balance),
+        balanceFormatted: formatCollateralToken(graphData.balance, 18),
         balance: graphData.balance,
         fees: graphData.fees,
-        marketDescription: graphData.market?.description || '',
+        marketDescription: graphData.market?.description ?? '',
         marketId: graphData.poolId,
         outcomeId: graphData.outcomeId,
         poolId: graphData.poolId,
+        collateralTokenDecimals: collateralTokenMetadata.decimals ?? 18,
     }
 }
 
@@ -54,5 +60,6 @@ export function transformPoolTokenToTokenViewModel(pooltoken: PoolToken): TokenV
         tokenName: trans('global.poolToken'),
         tokenSymbol: '',
         weight: 0,
+        isCollateralToken: false,
     };
 }

@@ -6,6 +6,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@date-io/date-fns": "^1.3.13",
+    "@fluxprotocol/amm-sdk": "^1.1.0",
     "@fvictorio/newton-raphson-method": "^1.0.5",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
@@ -15,7 +16,6 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
-    "amm-sdk": "file:../amm-sdk",
     "big.js": "^6.0.3",
     "bn.js": "^5.1.3",
     "chart.js": "^2.9.4",

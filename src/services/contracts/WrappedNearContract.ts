@@ -8,8 +8,8 @@ export class WrappedNearContract {
 
     constructor(account: Account) {
         this.contract = new Contract(account, WRAPPED_NEAR_ACCOUNT_ID, {
-            changeMethods: ['near_deposit', 'near_withdraw'],
-            viewMethods: [],
+            changeMethods: ['near_deposit', 'near_withdraw', 'storage_deposit'],
+            viewMethods: ['storage_balance_of', 'storage_minimum_balance', 'ft_balance_of'],
         });
     }
 
@@ -23,6 +23,30 @@ export class WrappedNearContract {
         this.contract.near_withdraw({
             amount: amountIn,
         }, MAX_GAS, '1');
+    }
+
+    depositStorage(amountIn: string) {
+        // @ts-ignore
+        return this.contract.storage_deposit({}, MAX_GAS, amountIn);
+    }
+
+    getStorageBalance(accountId: string): Promise<{ total: string, available: string }> {
+        // @ts-ignore
+        return this.contract.storage_balance_of({
+            account_id: accountId,
+        });
+    }
+
+    getBalance(accountId: string): Promise<string> {
+        // @ts-ignore
+        return this.contract.ft_balance_of({
+            account_id: accountId,
+        });
+    }
+
+    getMinimumRequiredStorageBalance(): Promise<string> {
+        // @ts-ignore
+        return this.contract.storage_minimum_balance({});
     }
 }
 

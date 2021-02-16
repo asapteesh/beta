@@ -14,6 +14,7 @@ import createDefaultWrapNearFormValues from './utils/createDefaultWrapNearFormVa
 import validateWrapNearFormValues from './utils/validateWrapNearFormValues';
 
 import s from './WrapNearDialog.module.scss';
+import Button from '../../components/Button';
 
 interface Props {
     open: boolean;
@@ -22,6 +23,8 @@ interface Props {
     onSubmit: (formValues: WrapNearFormValues) => void;
     input: TokenViewModel;
     output: TokenViewModel;
+    requiredDeposit: string;
+    onDepositClick: () => void;
 }
 
 export default function WrapNearDialog({
@@ -31,6 +34,8 @@ export default function WrapNearDialog({
     onSubmit,
     input,
     output,
+    requiredDeposit,
+    onDepositClick,
 }: Props): ReactElement {
     const [formValues, setFormValues] = useState(createDefaultWrapNearFormValues());
 
@@ -73,42 +78,55 @@ export default function WrapNearDialog({
             onRequestClose={onRequestClose}
             onSubmitClick={handleSubmit}
             canSubmit={errors.canSubmit}
+            hideButtons={requiredDeposit !== '0'}
         >
             <p>{trans('wrapNearDialog.description')}</p>
-            <div className={s.token}>
-                <div className={classnames(s.tokenHeader, s.noMargin)}>
-                    <span>{trans('market.label.youPay')}</span>
-                    <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
-                        {trans('global.balance', {}, true)}: {input.balanceFormatted}
-                    </TextButton>
-                </div>
-                <TokenSelect
-                    onTokenSwitch={() => {}}
-                    value={formatCollateralToken(formValues.amountIn, input.decimals)}
-                    tokens={[input]}
-                    selectedToken={input}
-                    onValueChange={(v) => handleInputChange(v)}
-                    showPrice={false}
-                />
-            </div>
 
-            <div className={s.switchTokens}>
-                <IconButton onClick={handleSwitchTokenPlaces} icon={swap} alt={trans('market.action.switchTokens')} />
-            </div>
+            {requiredDeposit === '0' && (
+                <>
+                    <div className={s.token}>
+                        <div className={classnames(s.tokenHeader, s.noMargin)}>
+                            <span>{trans('market.label.youPay')}</span>
+                            <TextButton onClick={handleBalanceClick} className={s.balanceButton}>
+                                {trans('global.balance', {}, true)}: {input.balanceFormatted}
+                            </TextButton>
+                        </div>
+                        <TokenSelect
+                            onTokenSwitch={() => {}}
+                            value={formatCollateralToken(formValues.amountIn, input.decimals)}
+                            tokens={[input]}
+                            selectedToken={input}
+                            onValueChange={(v) => handleInputChange(v)}
+                            showPrice={false}
+                        />
+                    </div>
 
-            <div className={s.token}>
-                <div className={s.tokenHeader}>
-                    <span>{trans('market.label.youReceive')}</span>
-                </div>
-                <TokenSelect
-                    onTokenSwitch={() => {}}
-                    value={formatCollateralToken(formValues.amountIn, output.decimals)}
-                    tokens={[output]}
-                    selectedToken={output}
-                    disabledInput
-                    showPrice={false}
-                />
-            </div>
+                    <div className={s.switchTokens}>
+                        <IconButton onClick={handleSwitchTokenPlaces} icon={swap} alt={trans('market.action.switchTokens')} />
+                    </div>
+
+                    <div className={s.token}>
+                        <div className={s.tokenHeader}>
+                            <span>{trans('market.label.youReceive')}</span>
+                        </div>
+                        <TokenSelect
+                            onTokenSwitch={() => {}}
+                            value={formatCollateralToken(formValues.amountIn, output.decimals)}
+                            tokens={[output]}
+                            selectedToken={output}
+                            disabledInput
+                            showPrice={false}
+                        />
+                    </div>
+                </>
+            )}
+
+            {requiredDeposit !== '0' && (
+                <>
+                    <p>{trans('wrapNearDialog.requiredDeposit.description', { amount: formatCollateralToken(requiredDeposit, 24, 5) })}</p>
+                    <Button onClick={onDepositClick}>{trans('wrapNearDialog.requiredDeposit.submit', { amount: formatCollateralToken(requiredDeposit, 24, 5) })}</Button>
+                </>
+            )}
 
             <Error error={errors.amountIn} />
         </Dialog>

@@ -12,6 +12,7 @@ export type AccountState = Readonly<{
     poolTokenLoading: boolean;
     nearToken?: TokenViewModel;
     wrappedNearToken?: TokenViewModel;
+    requiredWrappedNearDeposit?: string;
     errors: string[];
 }>;
 
@@ -44,6 +45,12 @@ const accountSlice = createSlice({
             return ({
                 ...state,
                 wrappedNearToken: action.payload,
+            });
+        },
+        setRequiredWrappedNearDeposit(state: AccountState, action: PayloadAction<string | undefined>): AccountState {
+            return ({
+                ...state,
+                requiredWrappedNearDeposit: action.payload,
             });
         },
         setAccountPoolTokens(state: AccountState, action: PayloadAction<PoolToken[]>): AccountState {
@@ -88,6 +95,7 @@ export const {
     setAccountBalances,
     setNearToken,
     setWrappedNearToken,
+    setRequiredWrappedNearDeposit,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

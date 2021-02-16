@@ -15,6 +15,7 @@ interface Props {
     onRequestClose: () => void;
     onSubmitClick: () => void;
     canSubmit?: boolean;
+    hideButtons?: boolean;
 }
 
 export default function Dialog({
@@ -24,6 +25,7 @@ export default function Dialog({
     onRequestClose,
     onSubmitClick,
     canSubmit = true,
+    hideButtons = false,
 }: PropsWithChildren<Props>) {
     return (
         <MuiDialog open={open} classes={{ paper: s.paper }}>
@@ -33,14 +35,16 @@ export default function Dialog({
             <DialogContent className={s.content}>
                 {children}
             </DialogContent>
-            <DialogActions>
-                <Button className={s.cancelButton} onClick={onRequestClose}>
-                    {trans('global.action.cancel')}
-                </Button>
-                <Button disabled={!canSubmit} className={s.confirmButton} onClick={onSubmitClick}>
-                    {trans('global.action.submit')}
-                </Button>
-            </DialogActions>
+            {!hideButtons && (
+                <DialogActions>
+                    <Button className={s.cancelButton} onClick={onRequestClose}>
+                        {trans('global.action.cancel')}
+                    </Button>
+                    <Button disabled={!canSubmit} className={s.confirmButton} onClick={onSubmitClick}>
+                        {trans('global.action.submit')}
+                    </Button>
+                </DialogActions>
+            )}
         </MuiDialog>
     );
 }

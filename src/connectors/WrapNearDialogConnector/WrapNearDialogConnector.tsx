@@ -4,7 +4,7 @@ import WrapNearDialog from '../../containers/WrapNearDialog';
 import { loadNearBalances } from '../../redux/account/accountActions';
 import { setWrappingNearDialogOpen } from '../../redux/dialogs/dialogs';
 import { Reducers } from '../../redux/reducers';
-import { unwrapNear, wrapNear, WrapNearFormValues } from '../../services/NearService';
+import { depositWrappedNearStorage, unwrapNear, wrapNear, WrapNearFormValues } from '../../services/NearService';
 
 
 export default function WrapNearDialogConnector() {
@@ -13,6 +13,7 @@ export default function WrapNearDialogConnector() {
     const isDialogOpen = useSelector((store: Reducers) => store.dialogs.isWrappingNearOpen);
     const nearToken = useSelector((store: Reducers) => store.account.nearToken);
     const wrappedNearToken = useSelector((store: Reducers) => store.account.wrappedNearToken);
+    const requiredDeposit = useSelector((store: Reducers) => store.account.requiredWrappedNearDeposit);
 
     const handleRequestCloseDialog = useCallback(() => {
         dispatch(setWrappingNearDialogOpen(false));
@@ -34,6 +35,12 @@ export default function WrapNearDialogConnector() {
         }
     }, []);
 
+    const handleDepositClick = useCallback(() => {
+        if (!requiredDeposit) return;
+
+        depositWrappedNearStorage(requiredDeposit);
+    }, [requiredDeposit]);
+
     if (!nearToken || !wrappedNearToken) {
         return <div />;
     }
@@ -46,6 +53,8 @@ export default function WrapNearDialogConnector() {
             onRequestSwitchPairs={handleRequestSwitchPairs}
             input={switched ? wrappedNearToken : nearToken}
             output={switched ? nearToken : wrappedNearToken}
+            requiredDeposit={requiredDeposit ?? '0'}
+            onDepositClick={handleDepositClick}
         />
     );
 }

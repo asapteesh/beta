@@ -1,6 +1,6 @@
-import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens, setNearToken, setWrappedNearToken } from "./account";
+import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens, setNearToken, setRequiredWrappedNearDeposit, setWrappedNearToken } from "./account";
 import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo } from '../../services/AccountService';
-import { getNearToken, getWrappedNearToken } from "../../services/NearService";
+import { getNearToken, getRequiredWrappedNearStorageDeposit, getWrappedNearStorageBalance, getWrappedNearToken } from "../../services/NearService";
 
 export function signIn() {
     return async (dispatch: Function) => {
@@ -33,6 +33,13 @@ export function loadNearBalances() {
     return async (dispatch: Function) => {
         const nearTokenRequest = getNearToken();
         const wrappedNeartokenRequest = getWrappedNearToken();
+
+        const storageUsage = await getWrappedNearStorageBalance();
+
+        if (storageUsage.total === '0') {
+            const requiredDeposit = await getRequiredWrappedNearStorageDeposit();
+            dispatch(setRequiredWrappedNearDeposit(requiredDeposit));
+        }
 
         const nearToken = await nearTokenRequest;
         const wrappedNearToken = await wrappedNeartokenRequest;

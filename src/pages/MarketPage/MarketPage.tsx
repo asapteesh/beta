@@ -23,6 +23,7 @@ import NotLoggedInConnector from '../../connectors/NotLoggedInConnector';
 import s from './MarketPage.module.scss';
 import useDisqus from '../../utils/hooks/useDisqus';
 import { setMarketDetail } from '../../redux/market/market';
+import NoWrappedNearCardConnector from '../../connectors/NoWrappedNearCardConnector';
 
 interface RouterParams {
     marketId: string;
@@ -63,46 +64,49 @@ export default function MarketPage() {
                     <MarketStatisticsConnector className={s.stats} />
                     <MarketResolutionInfoConenctor />
                 </div>
-                <ActionsCard className={s.tokenSwapper}>
-                    <TabbedView
-                        items={[{
-                            element: <TokenSwapperConnector key="tokenswapper" />,
-                            label: trans('market.label.swap'),
-                            show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity,
-                            id: '0',
-                        }, {
-                            element: <LiquidityProviderConnector key="liquidity" />,
-                            label: trans('market.label.liquidity'),
-                            show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity,
-                            id: '1',
-                        }, {
-                            element: <ClaimEarningsConnector key="claimEarnings" />,
-                            label: trans('market.label.claimEarnings'),
-                            show: account !== null && market?.finalized === true,
-                            id: '2',
-                        }, {
-                            element: <SeedPoolConnector key="seedpool" />,
-                            label: trans('market.label.seedPool'),
-                            show: account !== null && market?.finalized === false && !isExpired && !hasMarketLiquidity,
-                            id: '3',
-                        }, {
-                            element: <MarketClosed key="marketClosed" />,
-                            label: trans('market.label.marketClosed'),
-                            show: market?.finalized === false && isExpired,
-                            id: '4',
-                        }, {
-                            element: <ExitPoolConnector key="exitPool" />,
-                            label: trans('market.label.exitPool'),
-                            show: account !== null && hasMarketLiquidity && !!poolToken && !isExpired,
-                            id: '5',
-                        }, {
-                            element: <NotLoggedInConnector key="notloggedin" />,
-                            label: trans('market.label.notLoggedIn'),
-                            show: account === null,
-                            id: '6',
-                        }]}
-                    />
-                </ActionsCard>
+                <div className={s.actionsWrapper}>
+                    <NoWrappedNearCardConnector />
+                    <ActionsCard>
+                        <TabbedView
+                            items={[{
+                                element: <TokenSwapperConnector key="tokenswapper" />,
+                                label: trans('market.label.swap'),
+                                show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity,
+                                id: '0',
+                            }, {
+                                element: <LiquidityProviderConnector key="liquidity" />,
+                                label: trans('market.label.liquidity'),
+                                show: account !== null && market?.finalized === false && !isExpired && hasMarketLiquidity,
+                                id: '1',
+                            }, {
+                                element: <ClaimEarningsConnector key="claimEarnings" />,
+                                label: trans('market.label.claimEarnings'),
+                                show: account !== null && market?.finalized === true,
+                                id: '2',
+                            }, {
+                                element: <SeedPoolConnector key="seedpool" />,
+                                label: trans('market.label.seedPool'),
+                                show: account !== null && market?.finalized === false && !isExpired && !hasMarketLiquidity,
+                                id: '3',
+                            }, {
+                                element: <MarketClosed key="marketClosed" />,
+                                label: trans('market.label.marketClosed'),
+                                show: market?.finalized === false && isExpired,
+                                id: '4',
+                            }, {
+                                element: <ExitPoolConnector key="exitPool" />,
+                                label: trans('market.label.exitPool'),
+                                show: account !== null && hasMarketLiquidity && !!poolToken && !isExpired,
+                                id: '5',
+                            }, {
+                                element: <NotLoggedInConnector key="notloggedin" />,
+                                label: trans('market.label.notLoggedIn'),
+                                show: account === null,
+                                id: '6',
+                            }]}
+                        />
+                    </ActionsCard>
+                </div>
             </div>
             <div className={s.comments}>
                 <h2>{trans('global.comments')}</h2>

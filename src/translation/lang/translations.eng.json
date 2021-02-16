@@ -30,6 +30,9 @@
     "wrapNearDialog.requiredDeposit.description": "A small deposit of :amount NEAR is required in order to swap NEAR for wNEAR due storage costs",
     "wrapNearDialog.requiredDeposit.submit": "Deposit :amount NEAR",
 
+    "noWrappedNear.description": "Looks like you don't have any wNEAR. You can swap your NEAR with wNEAR by going to :accountId ➔ Wrap NEAR",
+    "noWrappedNear.action.openDialog": "Take me there",
+
     "marketStatus.uknown": "Unknown",
     "marketStatus.finalized": "Finalized",
     "marketStatus.invalid": "Invalid",

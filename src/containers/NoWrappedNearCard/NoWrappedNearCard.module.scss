@@ -1,0 +1,30 @@
+@import "../../styles/helpers/mixins";
+@import "../../styles/helpers/variables";
+
+.actionsCard {
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    margin-bottom: 1rem;
+}
+
+.content {
+    @include for-size($default-bigger-screen-breakpoint) {
+        width: 70%;
+        margin-left: 30%;
+    }
+}
+
+.icon {
+    display: none;
+
+    @include for-size($default-bigger-screen-breakpoint) {
+        display: block;
+        width: 8.625rem;
+        height: 8.625rem;
+        border-radius: 50%;
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+    }
+}

@@ -57,6 +57,8 @@ export function transformPoolTokenToTokenViewModel(pooltoken: PoolToken): TokenV
         poolBalance: '0',
         poolWeight: new Big(0),
         price: 0,
+        priceSymbol: '$',
+        priceSymbolPosition: 'left',
         tokenName: trans('global.poolToken'),
         tokenSymbol: '',
         weight: 0,

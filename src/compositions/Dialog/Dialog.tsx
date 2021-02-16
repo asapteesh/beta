@@ -25,10 +25,10 @@ export default function Dialog({
 }: PropsWithChildren<Props>) {
     return (
         <MuiDialog open={open} classes={{ paper: s.paper }}>
-            <DialogTitle>
+            <DialogTitle className={s.title}>
                 {title}
             </DialogTitle>
-            <DialogContent>
+            <DialogContent className={s.content}>
                 {children}
             </DialogContent>
             <DialogActions>

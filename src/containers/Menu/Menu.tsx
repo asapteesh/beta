@@ -18,6 +18,7 @@ interface Props {
     onLoginClick: () => void;
     onLogoutClick: () => void;
     onProfileClick: () => void;
+    onWrapNearClick: () => void;
     account: Account | null;
 }
 
@@ -25,6 +26,7 @@ export default function Menu({
     onLoginClick,
     onLogoutClick,
     onProfileClick,
+    onWrapNearClick,
     account,
     className = ''
 }: Props): ReactElement {
@@ -47,6 +49,11 @@ export default function Menu({
     function handleProfileClick() {
         handleMenuClose();
         onProfileClick();
+    }
+
+    function handleWrapNearClick() {
+        handleMenuClose();
+        onWrapNearClick();
     }
 
     return (
@@ -74,8 +81,9 @@ export default function Menu({
                             </Button>
                             <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
                                 <MuiMenuItem disabled>NEAR: {formatCollateralToken(account.balance, 24)} Ⓝ</MuiMenuItem>
-                                <MuiMenuItem onClick={handleProfileClick}>Profile</MuiMenuItem>
-                                <MuiMenuItem onClick={handleLogoutClick}>Logout</MuiMenuItem>
+                                <MuiMenuItem onClick={handleWrapNearClick}>{trans('menu.wrapNear')}</MuiMenuItem>
+                                <MuiMenuItem onClick={handleProfileClick}>{trans('menu.profile')}</MuiMenuItem>
+                                <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.logout')}</MuiMenuItem>
                             </MuiMenu>
                         </>
                     )}

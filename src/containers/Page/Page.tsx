@@ -5,6 +5,7 @@ import Footer from "../Footer";
 import MenuConnector from "../../connectors/MenuConnector";
 
 import styles from './Page.module.scss';
+import WrapNearDialogConnector from "../../connectors/WrapNearDialogConnector";
 interface Props {
     className?: string;
     bodyClassName?: string;
@@ -30,6 +31,7 @@ export default function Page({
         <div className={`${styles.page} ${className}`}>
             {/* Normally don't put connectors in containers.. */}
             {hasNavigation && <MenuConnector />}
+            <WrapNearDialogConnector />
             <main className={pageBodyClassName}>
                 {children}
             </main>

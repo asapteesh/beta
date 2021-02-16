@@ -1,3 +1,4 @@
+import { TokenViewModel } from "../../models/TokenViewModel";
 import { getAccountInfo, getPoolBalanceForMarketByAccount } from "../../services/AccountService";
 import { createMarket, getMarketById, getMarketOutcomeTokens, getMarkets, getResolutingMarkets, MarketFilters, MarketFormValues } from "../../services/MarketService";
 import { seedPool, exitPool, SeedPoolFormValues } from "../../services/PoolService";
@@ -51,9 +52,9 @@ export function loadMarket(id: string) {
     };
 }
 
-export function reloadTokens(marketId: string) {
+export function reloadTokens(marketId: string, collateralToken: TokenViewModel) {
     return async (dispatch: Function) => {
-        const tokens = await getMarketOutcomeTokens(marketId);
+        const tokens = await getMarketOutcomeTokens(marketId, collateralToken);
         if (tokens.length === 0) return;
 
         dispatch(setMarketDetailTokens(tokens));

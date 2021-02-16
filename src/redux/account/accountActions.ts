@@ -1,5 +1,6 @@
-import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens } from "./account";
+import { setAccount, setAccountBalances, setAccountLoading, setAccountPoolTokenLoading, setAccountPoolTokens, setNearToken, setWrappedNearToken } from "./account";
 import { signUserIn, getAccountInfo, signUserOut, getAccountBalancesInfo } from '../../services/AccountService';
+import { getNearToken, getWrappedNearToken } from "../../services/NearService";
 
 export function signIn() {
     return async (dispatch: Function) => {
@@ -25,6 +26,19 @@ export function getAccount() {
             dispatch(setAccountLoading(false));
             console.error('[getAccount]', error);
         }
+    }
+}
+
+export function loadNearBalances() {
+    return async (dispatch: Function) => {
+        const nearTokenRequest = getNearToken();
+        const wrappedNeartokenRequest = getWrappedNearToken();
+
+        const nearToken = await nearTokenRequest;
+        const wrappedNearToken = await wrappedNeartokenRequest;
+
+        dispatch(setNearToken(nearToken));
+        dispatch(setWrappedNearToken(wrappedNearToken));
     }
 }
 

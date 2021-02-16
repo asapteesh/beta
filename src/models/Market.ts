@@ -89,6 +89,8 @@ export async function transformToMarketViewModel(
             graphResponse.outcome_tags,
             graphResponse.pool.pool_balances as any,
             userBalances,
+            false,
+            collateralToken,
         ),
         poolTokenInfo: {
             totalSupply: poolTokenInfo?.total_supply || '0',

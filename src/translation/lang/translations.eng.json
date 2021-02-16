@@ -15,9 +15,16 @@
     "pages.marketOverview": "Trade",
     "pages.resoluteOverview": "Resoluted",
 
+    "menu.logout": "Logout",
+    "menu.profile": "Profile",
+    "menu.wrapNear": "Wrap NEAR",
+
     "home.title.head": ":appName - Markets",
     "home.title.welcome": "Welcome :username",
     "home.title.latestTrends": "These are the latest trends",
+
+    "wrapNearDialog.title": "Wrap NEAR",
+    "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Flux",
 
     "marketStatus.uknown": "Unknown",
     "marketStatus.finalized": "Finalized",

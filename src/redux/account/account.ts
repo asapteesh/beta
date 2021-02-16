@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account } from '../../models/Account';
 import { PoolToken } from '../../models/PoolToken';
+import { TokenViewModel } from '../../models/TokenViewModel';
 import { UserBalance } from '../../models/UserBalance';
 
 export type AccountState = Readonly<{
@@ -9,6 +10,8 @@ export type AccountState = Readonly<{
     poolTokens: PoolToken[];
     balances: UserBalance[];
     poolTokenLoading: boolean;
+    nearToken?: TokenViewModel;
+    wrappedNearToken?: TokenViewModel;
     errors: string[];
 }>;
 
@@ -29,6 +32,18 @@ const accountSlice = createSlice({
             return ({
                 ...state,
                 account: action.payload,
+            });
+        },
+        setNearToken(state: AccountState, action: PayloadAction<TokenViewModel | undefined>): AccountState {
+            return ({
+                ...state,
+                nearToken: action.payload,
+            });
+        },
+        setWrappedNearToken(state: AccountState, action: PayloadAction<TokenViewModel | undefined>): AccountState {
+            return ({
+                ...state,
+                wrappedNearToken: action.payload,
             });
         },
         setAccountPoolTokens(state: AccountState, action: PayloadAction<PoolToken[]>): AccountState {
@@ -71,6 +86,8 @@ export const {
     setAccountPoolTokenLoading,
     setAccountPoolTokens,
     setAccountBalances,
+    setNearToken,
+    setWrappedNearToken,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

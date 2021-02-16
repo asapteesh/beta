@@ -165,7 +165,7 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
     }
 }
 
-export async function getMarketOutcomeTokens(marketId: string): Promise<TokenViewModel[]> {
+export async function getMarketOutcomeTokens(marketId: string, collateralToken?: TokenViewModel): Promise<TokenViewModel[]> {
     try {
         const result = await graphqlClient.query({
             fetchPolicy: 'network-only',
@@ -202,7 +202,9 @@ export async function getMarketOutcomeTokens(marketId: string): Promise<TokenVie
         return transformToTokenViewModels(
             market.outcome_tags,
             market.pool.pool_balances as any,
-            balances
+            balances,
+            false,
+            collateralToken,
         );
     } catch (error) {
         console.error('[getMarketOutcomeTokens]', error);

@@ -46,11 +46,20 @@ export default function TokenSelect({
         onTokenSwitch(token);
     }, [onTokenSwitch]);
 
+    const priceClassName = classnames(s.price, {
+        [s['price--symbol-right']]: selectedToken.priceSymbolPosition === 'right',
+    });
+
     return (
         <div className={classnames(s['token-select'], className)}>
             <div className={s['token-select__info']}>
                 <span>{selectedToken.tokenName} {trans('global.token')}</span>
-                {showPrice && <span>${selectedToken.price.toFixed(3)}</span>}
+                {showPrice && (
+                    <span className={priceClassName}>
+                        <span className={s.priceSymbol}>{selectedToken.priceSymbol}</span>
+                        <span>{selectedToken.price.toFixed(3)}</span>
+                    </span>
+                )}
                 {!showPrice && <span />}
             </div>
             <div className={s['token-select__inputs']}>

@@ -1,7 +1,7 @@
 import Big from "big.js";
 
 import { PoolBalanceGraphData, transformToPoolBalanceViewModel } from "./PoolBalance";
-import { AccountTokenBalance, formatCollateralToken, getCollateralTokenBalance, getCollateralTokenMetadata, getCollateralTokenPrice } from '../services/CollateralTokenService';
+import { formatCollateralToken, getCollateralTokenBalance, getCollateralTokenMetadata, getCollateralTokenPrice } from '../services/CollateralTokenService';
 import { UserBalance } from "./UserBalance";
 import emojiSlice from "../utils/emojiSlice";
 
@@ -10,6 +10,8 @@ export interface TokenViewModel {
     balance: string;
     balanceFormatted: string;
     price: number;
+    priceSymbol: string;
+    priceSymbolPosition: 'left' | 'right';
     tokenSymbol: string;
     outcomeId: number;
     tokenAccountId?: string;
@@ -61,6 +63,7 @@ export function transformToTokenViewModels(
     poolBalanceData: PoolBalanceGraphData[] = [],
     userBalances: UserBalance[],
     isCollateralToken = false,
+    collateralToken?: TokenViewModel
 ): TokenViewModel[] {
     const poolBalances = transformToPoolBalanceViewModel(poolBalanceData, tags);
 
@@ -73,6 +76,8 @@ export function transformToTokenViewModels(
             balanceFormatted: formatCollateralToken(userBalance?.balance ?? '0', 18),
             outcomeId,
             price: poolBalance?.price || 0,
+            priceSymbol: collateralToken?.tokenSymbol || '$',
+            priceSymbolPosition: 'right',
             tokenSymbol: generateTokenName(outcome),
             tokenName: outcome,
             poolBalance: poolBalance?.poolBalance || "0",
@@ -112,6 +117,8 @@ export async function transformToMainTokenViewModel(collateralTokenAccountId: st
         outcomeId: NaN,
         poolWeight: new Big(0),
         price: fetchPrice ? await getCollateralTokenPrice(collateralTokenAccountId) : 0,
+        priceSymbol: '$',
+        priceSymbolPosition: 'left',
         tokenName: metadata.name,
         tokenSymbol: metadata.symbol,
         poolBalance: "",

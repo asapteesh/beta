@@ -45,3 +45,15 @@
         }
     }
 }
+
+.price {
+    display: flex;
+
+    &--symbol-right {
+        flex-direction: row-reverse;
+    }
+}
+
+.priceSymbol {
+    margin: 0 0.1rem;
+}

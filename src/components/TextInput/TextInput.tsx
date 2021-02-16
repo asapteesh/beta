@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import s from './TextInput.module.scss';
 import { InputProps } from '@material-ui/core';
 
-interface Props {
+export interface TextInputProps {
     multiline?: boolean;
     onChange?: (value: string) => void;
     value?: string;
@@ -22,7 +22,7 @@ export default function TextInput({
     onChange = () => {},
     type = 'text',
     ...props
-}: Props): ReactElement {
+}: TextInputProps): ReactElement {
     return (
         <TextField
             {...props}

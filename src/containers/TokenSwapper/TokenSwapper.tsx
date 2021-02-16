@@ -20,7 +20,6 @@ import swap from "./../../assets/images/icons/swap.svg";
 import { validateSwapFormValues } from './utils/validateSwapFormValues';
 import Error from '../../components/Error';
 import TextButton from '../../components/TextButton';
-import market from '../../redux/market/market';
 
 interface TokenSwapperProps {
     inputs: TokenViewModel[];

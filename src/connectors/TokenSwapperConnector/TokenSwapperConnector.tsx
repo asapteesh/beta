@@ -36,7 +36,7 @@ export default function TokenSwapperConnector({
         clearInterval(intervalId.current as unknown as number);
 
         intervalId.current = setInterval(() => {
-            dispatch(reloadTokens(market.id));
+            dispatch(reloadTokens(market.id, market.collateralToken));
         }, TOKEN_FETCH_INTERVAL_MS);
 
         return () => {

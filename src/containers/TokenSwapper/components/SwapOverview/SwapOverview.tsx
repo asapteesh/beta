@@ -12,6 +12,7 @@ interface SwapOverviewProps {
 
 export default function SwapOverview({formValues}: SwapOverviewProps): ReactElement {
     let formattedFormValues = mutateFormValues(formValues);
+    const collateralToken = formValues.fromToken.isCollateralToken ? formValues.fromToken : formValues.toToken;
 
     return (
         <div className={s['swap-overview']}>
@@ -27,7 +28,9 @@ export default function SwapOverview({formValues}: SwapOverviewProps): ReactElem
 
             <div className={s['swap-overview__info-row']}>
                 <span className={s['swap-overview__info-key']}>{trans('market.overview.estimatedFee')}</span>
-                <span className={s['swap-overview__info-value']}>${formattedFormValues.feePaid}</span>
+                <span className={s['swap-overview__info-value']}>
+                    {formattedFormValues.feePaid} {collateralToken.tokenSymbol}
+                </span>
             </div>
 
             <div className={s['swap-overview__info-row']}>

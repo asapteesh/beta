@@ -1,8 +1,11 @@
 import Big from "big.js";
 import { WRAPPED_NEAR_ACCOUNT_ID } from "../config";
 import { TokenViewModel } from "../models/TokenViewModel";
-import { toCollateralToken } from "./CollateralTokenService";
+import { formatCollateralToken } from "./CollateralTokenService";
 import { connectSdk } from "./WalletService";
+import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
+import nearIcon from '../assets/images/icons/near-icon.png';
+import createWrappedNearContract from "./contracts/WrappedNearContract";
 
 export async function getNearToken(): Promise<TokenViewModel> {
     const defaults: TokenViewModel = {
@@ -20,6 +23,7 @@ export async function getNearToken(): Promise<TokenViewModel> {
         weight: 0,
         balance: '0',
         balanceFormatted: '0',
+        tokenImage: nearIcon,
     }
 
     try {
@@ -29,7 +33,7 @@ export async function getNearToken(): Promise<TokenViewModel> {
         return {
             ...defaults,
             balance: balance.available,
-            balanceFormatted: toCollateralToken(balance.available, 24),
+            balanceFormatted: formatCollateralToken(balance.available, 24),
         }
     } catch (error) {
         console.error('[getNearToken]', error);
@@ -50,6 +54,7 @@ export async function getWrappedNearToken(): Promise<TokenViewModel> {
         priceSymbol: '$',
         priceSymbolPosition: 'left',
         tokenSymbol: 'wNEAR',
+        tokenImage: wrappedNearIcon,
         weight: 0,
         balance: '0',
         balanceFormatted: '0',
@@ -63,10 +68,25 @@ export async function getWrappedNearToken(): Promise<TokenViewModel> {
         return {
             ...defaults,
             balance,
-            balanceFormatted: toCollateralToken(balance, 24),
+            balanceFormatted: formatCollateralToken(balance, 24),
         }
     } catch (error) {
         console.error('[getWrappedNearToken]', error);
         return defaults;
     }
+}
+
+export interface WrapNearFormValues {
+    amountIn: string;
+    type: 'wrap' | 'unwrap';
+}
+
+export async function wrapNear(amountIn: string) {
+    const wNearContract = await createWrappedNearContract();
+    wNearContract.wrapNear(amountIn);
+}
+
+export async function unwrapNear(amountIn: string) {
+    const wNearContract = await createWrappedNearContract();
+    wNearContract.unwrapNear(amountIn);
 }

@@ -66,6 +66,7 @@ export default function TokenSelect({
                 <div className={s['token-select__inputs-info']}>
                     <Token
                         tokenName={selectedToken.tokenName}
+                        tokenImage={selectedToken.tokenImage}
                         colorVar={getColorForOutcome(selectedToken.outcomeId)}
                         className={s['token-select__token-icon']}
                     />

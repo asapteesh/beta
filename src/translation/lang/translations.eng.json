@@ -25,6 +25,8 @@
 
     "wrapNearDialog.title": "Wrap NEAR",
     "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Flux",
+    "wrapNearDialog.errors.amountIn.exactBalance": "Please leave some balance for transaction fees",
+    "wrapNearDialog.errors.amountIn.notEnoughBalance": "Not enough balance",
 
     "marketStatus.uknown": "Unknown",
     "marketStatus.finalized": "Finalized",

@@ -5,4 +5,5 @@ export interface TokenMetadata {
     reference: string;
     decimals: number;
     collateralTokenId: string;
+    tokenImage?: string;
 }

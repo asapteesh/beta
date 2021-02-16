@@ -4,8 +4,10 @@ import { PoolBalanceGraphData, transformToPoolBalanceViewModel } from "./PoolBal
 import { formatCollateralToken, getCollateralTokenBalance, getCollateralTokenMetadata, getCollateralTokenPrice } from '../services/CollateralTokenService';
 import { UserBalance } from "./UserBalance";
 import emojiSlice from "../utils/emojiSlice";
+import { TokenMetadata } from "./TokenMetadata";
 
 export interface TokenViewModel {
+    tokenImage?: string;
     tokenName: string;
     balance: string;
     balanceFormatted: string;
@@ -63,7 +65,7 @@ export function transformToTokenViewModels(
     poolBalanceData: PoolBalanceGraphData[] = [],
     userBalances: UserBalance[],
     isCollateralToken = false,
-    collateralToken?: TokenViewModel
+    collateralToken?: TokenViewModel,
 ): TokenViewModel[] {
     const poolBalances = transformToPoolBalanceViewModel(poolBalanceData, tags);
 
@@ -99,7 +101,11 @@ export function transformToTokenViewModels(
  * @param {boolean} [fetchPrice=true]
  * @return {Promise<TokenViewModel>}
  */
-export async function transformToMainTokenViewModel(collateralTokenAccountId: string, accountId?: string, fetchPrice = true): Promise<TokenViewModel> {
+export async function transformToMainTokenViewModel(
+    collateralTokenAccountId: string,
+    accountId?: string,
+    fetchPrice = true
+): Promise<TokenViewModel> {
     let balance = '0';
 
     const metadataRequest = getCollateralTokenMetadata(collateralTokenAccountId);
@@ -126,5 +132,6 @@ export async function transformToMainTokenViewModel(collateralTokenAccountId: st
         tokenAccountId: collateralTokenAccountId,
         odds: new Big(0),
         isCollateralToken: true,
+        tokenImage: metadata.tokenImage,
     };
 }

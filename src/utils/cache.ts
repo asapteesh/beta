@@ -1,6 +1,9 @@
 const cacheStorage = new Map<string, any>();
 const creationPromises = new Map<string, Promise<any>>();
 
+// @ts-ignore
+window.cc = cacheStorage;
+
 /**
  * Caches an item by it's id and returns it if it's requested again.
  * If it does not exist it asks you to create the item

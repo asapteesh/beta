@@ -1,12 +1,13 @@
 // import { utils } from 'near-api-js';
 import Big from 'big.js';
 
-import { FUNGIBLE_TOKEN_ACCOUNT_ID } from "../config";
+import { FUNGIBLE_TOKEN_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from "../config";
 import { isFetchResultSuccesful } from "../models/FetchResult";
 import { TokenMetadata } from '../models/TokenMetadata';
 import cache from '../utils/cache';
 import { getTokenPriceByTicker } from "./TokenPriceService";
 import { connectNear, connectSdk } from "./WalletService";
+import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
 
 export function formatCollateralToken(amount: string, decimals = 18, dp = 2): string {
     const denominator = new Big(10).pow(decimals);
@@ -73,14 +74,22 @@ export async function getCollateralTokenMetadata(collateralTokenId: string): Pro
 
     try {
         if (!collateralTokenId) return defaultMetadata;
+
         const metadata = await cache(`metadata_${collateralTokenId}`, async () => {
             const sdk = await connectSdk();
             return sdk.getTokenMetadata(collateralTokenId);
         });
 
+        let tokenImage: string | undefined;
+
+        if (collateralTokenId === WRAPPED_NEAR_ACCOUNT_ID) {
+            tokenImage = wrappedNearIcon;
+        }
+
         return {
             ...metadata,
             collateralTokenId,
+            tokenImage,
         };
     } catch (error) {
         console.error('[getCollateralTokenMetadata]', error);

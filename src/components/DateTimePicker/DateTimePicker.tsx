@@ -17,6 +17,7 @@ export default function DateTimePicker({
             inputVariant="outlined"
             value={value}
             className={s.root}
+            ampm={false}
             onChange={onChange}
         />
     );

@@ -50,7 +50,8 @@ export class TokenContract {
                 payload: payload
             },
             MAX_GAS,
-            STORAGE_BASE.mul(new BN(2)),
+            new BN(0),
+            // STORAGE_BASE.mul(new BN(2)),
         );
     }
 
@@ -73,7 +74,8 @@ export class TokenContract {
             payload: payload
         },
             MAX_GAS,
-            storageRequired,
+            new BN(0),
+            // storageRequired,
         );
     }
 }

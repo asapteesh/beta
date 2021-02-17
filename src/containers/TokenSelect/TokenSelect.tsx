@@ -53,7 +53,7 @@ export default function TokenSelect({
     return (
         <div className={classnames(s['token-select'], className)}>
             <div className={s['token-select__info']}>
-                <span>{selectedToken.tokenName} {trans('global.token')}</span>
+                <span>{selectedToken.tokenName}</span>
                 {showPrice && (
                     <span className={priceClassName}>
                         <span className={s.priceSymbol}>{selectedToken.priceSymbol}</span>
@@ -72,7 +72,7 @@ export default function TokenSelect({
                     />
 
                     {tokens.length === 1 && (
-                        <span className={s['token-select__token-name']}>{selectedToken.tokenName}</span>
+                        <span className={s['token-select__token-name']}>{selectedToken.tokenSymbol}</span>
                     )}
 
                     {tokens.length > 1 && (

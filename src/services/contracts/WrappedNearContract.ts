@@ -25,9 +25,9 @@ export class WrappedNearContract {
         }, MAX_GAS, '1');
     }
 
-    depositStorage(amountIn: string) {
+    depositStorage(amountIn: string, account_id?: string) {
         // @ts-ignore
-        return this.contract.storage_deposit({}, MAX_GAS, amountIn);
+        return this.contract.storage_deposit({ account_id }, MAX_GAS, amountIn);
     }
 
     getStorageBalance(accountId: string): Promise<{ total: string, available: string }> {

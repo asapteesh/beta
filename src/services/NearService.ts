@@ -104,7 +104,7 @@ export async function getRequiredWrappedNearStorageDeposit() {
     return wNearContract.getMinimumRequiredStorageBalance();
 }
 
-export async function depositWrappedNearStorage(amount: string) {
+export async function depositWrappedNearStorage(amount: string, accountId?: string) {
     const wNearContract = await createWrappedNearContract();
-    return wNearContract.depositStorage(amount);
+    return wNearContract.depositStorage(amount, accountId);
 }

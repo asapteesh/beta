@@ -11,6 +11,7 @@ import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService'
 import { getCollateralTokenMetadata } from './CollateralTokenService';
 import createProtocolContract from './contracts/ProtocolContract';
 import { graphqlClient } from './GraphQLService';
+import { connectSdk } from './WalletService';
 
 export interface MarketFormValues {
     isCategoricalMarket: boolean;
@@ -269,4 +270,9 @@ export function getEligibleAmountForRedeeming(tokens: TokenViewModel[]): Big {
     });
 
     return lowestBalance;
+}
+
+export async function burnOutcomeTokensRedeemCollateral(marketId: string, toBurn: string) {
+    const sdk = await connectSdk();
+    await sdk.burnOutcomeTokensRedeemCollateral(marketId, toBurn);
 }

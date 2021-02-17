@@ -9,23 +9,25 @@ import s from './Redeem.module.scss';
 export interface Props {
     amountRedeemable: string;
     market: MarketViewModel;
+    onRedeemClick: () => void;
 }
 
 export default function Redeem({
     market,
     amountRedeemable,
+    onRedeemClick,
 }: Props) {
     return (
         <div>
             <p>
                 {trans('redeem.description', {
-                    amount: FluxSdk.utils.formatToken(amountRedeemable, market.collateralToken.decimals),
+                    amount: FluxSdk.utils.formatToken(amountRedeemable, 18),
                     tokenSymbol: market.collateralToken.tokenSymbol,
                 })}
             </p>
-            <Button className={s.confirmButton}>
+            <Button className={s.confirmButton} onClick={onRedeemClick}>
                 {trans('redeem.action.submit', {
-                    amount: FluxSdk.utils.formatToken(amountRedeemable, market.collateralToken.decimals),
+                    amount: FluxSdk.utils.formatToken(amountRedeemable, 18),
                     tokenSymbol: market.collateralToken.tokenSymbol,
                 })}
             </Button>

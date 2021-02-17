@@ -5,10 +5,13 @@ import {
 
 import FluxSdk from '@fluxprotocol/amm-sdk';
 
-import { NETWORK } from '../config';
+import { API_URL, NETWORK, NULL_CONTRACT, PROTOCOL_ACCOUNT_ID } from '../config';
 
 let sdkInstance = new FluxSdk({
     network: NETWORK,
+    protocolContractId: PROTOCOL_ACCOUNT_ID,
+    nullContractId: NULL_CONTRACT,
+    graphApiUrl: API_URL,
 });
 
 export async function connectSdk(): Promise<FluxSdk> {

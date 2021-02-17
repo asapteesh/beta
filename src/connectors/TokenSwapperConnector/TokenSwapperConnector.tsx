@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BUY } from '../../config';
 import TokenSwapper from '../../containers/TokenSwapper';
 import TokenSwapperLoader from '../../containers/TokenSwapper/TokenSwapperLoader';
 import { TokenViewModel } from '../../models/TokenViewModel';
@@ -49,8 +50,8 @@ export default function TokenSwapperConnector({
     ): Promise<void> {
         if (!market) throw new Error("Market is undefined");
 
-        if (values.fromToken.tokenName === market.collateralTokenId) {
-            const token = await createTokenContract(values.fromToken.tokenName);
+        if (values.type === BUY) {
+            const token = await createTokenContract(values.fromToken.tokenAccountId || '');
             return token.buy(market.id, values);
         } else {
             const protocol = await createProtocolContract();

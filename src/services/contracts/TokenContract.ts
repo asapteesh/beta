@@ -10,8 +10,8 @@ export class TokenContract {
 
     constructor(account: Account, tokenAccountId: string) {
         this.contract = new Contract(account, tokenAccountId, {
-            viewMethods: ['get_balance'],
-            changeMethods: ['transfer_with_vault', 'register_account'],
+            viewMethods: ['ft_balance_of'],
+            changeMethods: ['ft_transfer_call', 'register_account'],
         });
     }
 
@@ -27,14 +27,14 @@ export class TokenContract {
 
     async getBalance(accountId: string): Promise<void> {
         // @ts-ignore
-        return this.contract.get_balance({account_id: accountId});
+        return this.contract.ft_balance_of({account_id: accountId});
     }
 
     async buy(
         marketId: string,
         values: SwapFormValues
     ): Promise<void> {
-        let payload = JSON.stringify({
+        let msg = JSON.stringify({
             function: "buy",
             args: {
                 market_id: marketId,
@@ -44,10 +44,10 @@ export class TokenContract {
         });
 
         // @ts-ignore
-        return this.contract.transfer_with_vault({
+        return this.contract.ft_transfer_call({
                 receiver_id: PROTOCOL_ACCOUNT_ID,
                 amount: values.amountIn,
-                payload: payload
+                msg,
             },
             MAX_GAS,
             new BN(0),
@@ -56,7 +56,7 @@ export class TokenContract {
     }
 
     async addLiquidity(marketId: string, amountIn: string, weightIndication: string[] = []) {
-        let payload = JSON.stringify({
+        let msg = JSON.stringify({
             function: "add_liquidity",
             args: {
                 market_id: marketId,
@@ -68,10 +68,10 @@ export class TokenContract {
         const storageRequired = new BN('80000000000000000000000').mul(new BN(weightIndication.length));
 
         // @ts-ignore
-        return this.contract.transfer_with_vault({
+        return this.contract.ft_transfer_call({
             receiver_id: PROTOCOL_ACCOUNT_ID,
             amount: amountIn,
-            payload: payload
+            msg
         },
             MAX_GAS,
             new BN(0),

@@ -1,11 +1,14 @@
 import { gql } from '@apollo/client';
+import Big from 'big.js';
 import { format } from 'date-fns';
+import { FUNGIBLE_TOKEN_ACCOUNT_ID } from '../config';
 
 import { FetchResult, FetchResultType } from '../models/FetchResult';
 import { GraphMarketResponse, MarketCategory, MarketViewModel, transformToMarketViewModel } from '../models/Market';
 import { TokenViewModel, transformToMainTokenViewModel, transformToTokenViewModels } from '../models/TokenViewModel';
 import { UserBalance } from '../models/UserBalance';
 import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
+import { getCollateralTokenMetadata } from './CollateralTokenService';
 import createProtocolContract from './contracts/ProtocolContract';
 import { graphqlClient } from './GraphQLService';
 
@@ -18,16 +21,22 @@ export interface MarketFormValues {
     extraInfo: string;
 }
 
+// @ts-ignore
+window.b = Big;
+
 export async function createMarket(values: MarketFormValues): Promise<FetchResult<any, string>> {
     try {
         const protocol = await createProtocolContract();
         const outcomes = values.outcomes.length > 2 ? values.outcomes : ['YES', 'NO'];
+        const tokenMetadata = await getCollateralTokenMetadata(FUNGIBLE_TOKEN_ACCOUNT_ID);
 
         protocol.createMarket(
             values.description,
             outcomes,
             values.categories,
             values.resolutionDate,
+            new Big(`1e${tokenMetadata.decimals}`).div(50).toString(),
+            FUNGIBLE_TOKEN_ACCOUNT_ID,
             values.extraInfo
         );
 
@@ -231,4 +240,33 @@ export async function claimEarningsForMarket(marketId: string) {
 
 export function formatResolutionDate(resolutionDate: Date): string {
     return format(resolutionDate, 'MMMM d, yyyy HH:mm');
+}
+
+/**
+ * Checks whether or not user is eligible for swapping their shares for a collateral token
+ *
+ * @export
+ * @param {TokenViewModel[]} tokens
+ * @return {boolean}
+ */
+export function isEligibleForRedeeming(tokens: TokenViewModel[]): boolean {
+    return !tokens.some(token => token.balance === '0');
+}
+
+export function getEligibleAmountForRedeeming(tokens: TokenViewModel[]): Big {
+    if (!isEligibleForRedeeming(tokens)) {
+        return new Big(0);
+    }
+
+    let lowestBalance = new Big(tokens[0].balance);
+
+    tokens.forEach((token) => {
+        const balance = new Big(token.balance);
+
+        if (balance.lt(lowestBalance)) {
+            lowestBalance = balance;
+        }
+    });
+
+    return lowestBalance;
 }

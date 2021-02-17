@@ -21,6 +21,8 @@ class ProtocolContract {
         outcomes: string[],
         categories: string[],
         endDate: Date,
+        swapFee: string,
+        collateralTokenId: string,
         extraInfo: string = '',
     ): Promise<void> {
         // Each outcome is stored seperatly in near requiring more storage
@@ -33,9 +35,9 @@ class ProtocolContract {
             outcomes: outcomes.length,
             outcome_tags: outcomes,
             end_time: endDate.getTime().toString(),
-            collateral_token_id: FUNGIBLE_TOKEN_ACCOUNT_ID,
+            collateral_token_id: collateralTokenId,
             categories,
-            swap_fee: toCollateralToken(DEFAULT_FEE.toString(), 16),
+            swap_fee: swapFee,
         }, MAX_GAS, storageRequired);
     }
 

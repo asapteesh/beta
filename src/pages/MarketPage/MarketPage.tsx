@@ -24,6 +24,8 @@ import s from './MarketPage.module.scss';
 import useDisqus from '../../utils/hooks/useDisqus';
 import { setMarketDetail } from '../../redux/market/market';
 import NoWrappedNearCardConnector from '../../connectors/NoWrappedNearCardConnector';
+import { isEligibleForRedeeming } from '../../services/MarketService';
+import RedeemConnector from '../../connectors/RedeemConnector';
 
 interface RouterParams {
     marketId: string;
@@ -39,6 +41,7 @@ export default function MarketPage() {
 
     const hasMarketLiquidity = market?.poolTokenInfo.totalSupply !== '0';
     const isExpired = market?.resolutionDate ? market.resolutionDate <= new Date() : false;
+    const canRedeem = isEligibleForRedeeming(market?.outcomeTokens || []);
 
     useEffect(() => {
         dispatch(loadMarket(marketId));
@@ -103,6 +106,11 @@ export default function MarketPage() {
                                 label: trans('market.label.notLoggedIn'),
                                 show: account === null,
                                 id: '6',
+                            }, {
+                                element: <RedeemConnector key="redeem" />,
+                                label: trans('market.label.redeem'),
+                                show: account !== null && hasMarketLiquidity && market?.finalized === false && canRedeem,
+                                id: '7',
                             }]}
                         />
                     </ActionsCard>

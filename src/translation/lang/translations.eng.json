@@ -33,6 +33,9 @@
     "noWrappedNear.description": "Looks like you don't have any wNEAR. You can swap your NEAR with wNEAR by going to :accountId ➔ Wrap NEAR",
     "noWrappedNear.action.openDialog": "Take me there",
 
+    "redeem.description": "If you have shares in every outcome, you can redeem them for collateral. You are eligible for :amount :tokenSymbol",
+    "redeem.action.submit": "Redeem",
+
     "marketStatus.uknown": "Unknown",
     "marketStatus.finalized": "Finalized",
     "marketStatus.invalid": "Invalid",
@@ -54,6 +57,7 @@
     "market.label.youPay": "You pay",
     "market.label.youReceive": "You receive",
     "market.label.overview": "Overview",
+    "market.label.redeem": "Redeem",
     "market.label.swap": "Swap",
     "market.label.liquidity": "Add liquidity",
     "market.label.claimEarnings": "Claim",

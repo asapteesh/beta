@@ -3,14 +3,14 @@ import createProtocolContract from "./contracts/ProtocolContract";
 import createTokenContract from "./contracts/TokenContract";
 
 export interface SeedPoolFormValues {
-    outcomePercentages: number[];
+    outcomePercentages: string[];
     mainTokenInput: string;
     mainTokenInputFormatted: string;
 }
 
 export async function seedPool(marketId: string, tokenId: string, values: SeedPoolFormValues) {
     const token = await createTokenContract(tokenId);
-    const weights = calcDistributionHint(values.outcomePercentages);
+    const weights = calcDistributionHint(values.outcomePercentages.map(p => Number(p)));
 
     token.addLiquidity(
         marketId,

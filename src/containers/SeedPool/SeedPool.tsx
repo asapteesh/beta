@@ -35,7 +35,7 @@ export default function SeedPool({
 
     function handlePercentageChange(index: number, value: string) {
         const percentages = formValues.outcomePercentages;
-        percentages[index] = Number(value);
+        percentages[index] = value;
 
         setFormValues({
             ...formValues,
@@ -62,7 +62,7 @@ export default function SeedPool({
     useEffect(() => {
         setFormValues({
             ...formValues,
-            outcomePercentages: market.outcomeTokens.map(() => 0)
+            outcomePercentages: market.outcomeTokens.map(() => '0')
         });
     }, [market.outcomeTokens]);
 
@@ -96,7 +96,7 @@ export default function SeedPool({
                     <div className={s.inputWrapper} key={index}>
                         <Label text={market.outcomeTokens.find(outcome => outcome.outcomeId === index)?.tokenName || ""} />
                         <TextInput
-                            value={percentage.toString()}
+                            value={percentage}
                             type="number"
                             onChange={(value) => handlePercentageChange(index, value)}
                             error={!!errors.outcomePercentages[index]}

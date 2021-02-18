@@ -18,7 +18,8 @@ export function validateSeedPool(formValues: SeedPoolFormValues, market: MarketV
         mainTokenInput: '',
     }
 
-    errors.outcomePercentages = formValues.outcomePercentages.map(percentage => {
+    errors.outcomePercentages = formValues.outcomePercentages.map(percentageRaw => {
+        const percentage = Number(percentageRaw);
         if (percentage <= 0) return trans('seedPool.inputZero');
         if (percentage >= 100) return trans('seedPool.input100');
 
@@ -26,7 +27,7 @@ export function validateSeedPool(formValues: SeedPoolFormValues, market: MarketV
     });
 
     const hasOutcomeErrors = errors.outcomePercentages.some(item => item !== '');
-    const percentageTogether = formValues.outcomePercentages.reduce((prev, cur) => prev + cur, 0);
+    const percentageTogether = formValues.outcomePercentages.map(p => Number(p)).reduce((prev, cur) => prev + cur, 0);
 
     if (hasOutcomeErrors || percentageTogether !== 100) {
         errors.canSeed = false;

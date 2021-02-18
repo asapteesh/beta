@@ -29,7 +29,7 @@ export default function ExitPool({
     function handleAmountInChange(value: string) {
         setFormValues({
             ...formValues,
-            amountIn: value ? toCollateralToken(value) : '',
+            amountIn: value ? toCollateralToken(value, poolToken.collateralTokenDecimals) : '',
             amountInFormatted: value,
         });
     }

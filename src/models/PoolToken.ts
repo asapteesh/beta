@@ -51,7 +51,7 @@ export function transformPoolTokenToTokenViewModel(pooltoken: PoolToken): TokenV
     return {
         balance: pooltoken.balance,
         balanceFormatted: pooltoken.balanceFormatted,
-        decimals: 18,
+        decimals: pooltoken.collateralTokenDecimals,
         odds: new Big(0),
         outcomeId: NaN,
         poolBalance: '0',

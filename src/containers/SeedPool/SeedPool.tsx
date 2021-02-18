@@ -47,7 +47,7 @@ export default function SeedPool({
         setFormValues({
             ...formValues,
             mainTokenInputFormatted: value,
-            mainTokenInput: value ? toCollateralToken(value) : '',
+            mainTokenInput: value ? toCollateralToken(value, mainToken.decimals) : '',
         });
     }
 

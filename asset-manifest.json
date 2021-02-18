@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "./static/css/main.0baecf81.chunk.css",
+    "main.css": "./static/css/main.b1ea340c.chunk.css",
     "main.js": "./static/js/main.b6a43198.chunk.js",
     "main.js.map": "./static/js/main.b6a43198.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.a1e146fc.js",
@@ -8,7 +8,7 @@
     "static/js/2.af89cc9a.chunk.js": "./static/js/2.af89cc9a.chunk.js",
     "static/js/2.af89cc9a.chunk.js.map": "./static/js/2.af89cc9a.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.0baecf81.chunk.css.map": "./static/css/main.0baecf81.chunk.css.map",
+    "static/css/main.b1ea340c.chunk.css.map": "./static/css/main.b1ea340c.chunk.css.map",
     "static/js/2.af89cc9a.chunk.js.LICENSE.txt": "./static/js/2.af89cc9a.chunk.js.LICENSE.txt",
     "static/media/global.module.scss": "./static/media/background-wave-dark.0522574f.svg",
     "static/media/card-beer.6ac3cfd7.png": "./static/media/card-beer.6ac3cfd7.png",
@@ -44,7 +44,7 @@
   "entrypoints": [
     "static/js/runtime-main.a1e146fc.js",
     "static/js/2.af89cc9a.chunk.js",
-    "static/css/main.0baecf81.chunk.css",
+    "static/css/main.b1ea340c.chunk.css",
     "static/js/main.b6a43198.chunk.js"
   ]
 }

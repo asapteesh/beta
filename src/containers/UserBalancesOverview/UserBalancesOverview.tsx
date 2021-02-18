@@ -50,7 +50,7 @@ export default function UserBalancesOverview({
                             </td>
                             <td>
                                 <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
-                                    {formatCollateralToken(info.balance, 18)}
+                                    {formatCollateralToken(info.balance, info.collateralTokenDecimals)}
                                 </Link>
                             </td>
                             <td>

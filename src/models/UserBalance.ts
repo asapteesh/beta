@@ -1,5 +1,5 @@
-import { getCollateralTokenMetadata } from "../services/CollateralTokenService";
 import trans from "../translation/trans";
+import { TokenMetadata } from "./TokenMetadata";
 
 export interface UserBalance {
     outcomeId: number;
@@ -8,6 +8,7 @@ export interface UserBalance {
     marketDescription: string;
     marketStatus: string;
     outcomeTag: string;
+    collateralTokenDecimals: number;
 }
 
 export interface GraphUserBalancesItem {
@@ -49,7 +50,7 @@ function getMarketStatus(data: GraphUserBalancesItem['market']) {
     }
 }
 
-export function transformToUserBalance(graphData: GraphUserBalancesItem): UserBalance {
+export function transformToUserBalance(graphData: GraphUserBalancesItem, collateralTokenMetadata: TokenMetadata): UserBalance {
     return {
         balance: graphData.balance,
         outcomeId: graphData.outcome_id,
@@ -57,5 +58,6 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem): UserBa
         marketDescription: graphData.market?.description || '',
         marketStatus: getMarketStatus(graphData.market),
         outcomeTag: graphData.market?.outcome_tags[graphData.outcome_id] || '',
+        collateralTokenDecimals: collateralTokenMetadata.decimals,
     }
 }

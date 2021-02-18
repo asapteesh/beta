@@ -63,6 +63,10 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
                                 end_time
                                 finalized
                                 payout_numerator
+
+                                pool {
+                                    collateral_token_id
+                                }
                             }
                         }
                     }
@@ -74,16 +78,30 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
         });
 
         const accountBalances: GraphAcountBalancesResponse = result.data.account;
-        const tokensMetadata = await Promise.all(accountBalances.earned_fees.map(item => getCollateralTokenMetadata(item.market?.pool.collateral_token_id || '')));
 
+        // Find all collateral tokens
+        let allCollateralTokenIds: string[] = accountBalances.earned_fees.map(item => item.market?.pool.collateral_token_id || '');
+        allCollateralTokenIds.push(...accountBalances.balances.map(item => item.market?.pool.collateral_token_id || ''));
+        allCollateralTokenIds = allCollateralTokenIds.filter(item => item);
+
+        // Fetch all token metadata
+        const tokensMetadata = await Promise.all(allCollateralTokenIds.map(item => getCollateralTokenMetadata(item)));
+
+        // Transform the fees
         const poolTokens = accountBalances.earned_fees.map((data) => {
             const tokenMetadata = tokensMetadata.find(metadata => metadata.collateralTokenId === data.market?.pool.collateral_token_id);
             return transformToPoolToken(data, tokenMetadata!);
         });
 
+        // Transform the balances
+        const marketBalances = accountBalances.balances.map((data) => {
+            const tokenMetadata = tokensMetadata.find(metadata => metadata.collateralTokenId === data.market?.pool.collateral_token_id);
+            return transformToUserBalance(data, tokenMetadata!);
+        });
+
         return {
             poolTokens,
-            marketBalances: accountBalances.balances.map((data) => transformToUserBalance(data)),
+            marketBalances,
         };
     } catch (error) {
         console.error('[getPoolTokensByAccountId]', error);
@@ -107,6 +125,10 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
 
                             market {
                                 outcome_tags
+
+                                pool {
+                                    collateral_token_id
+                                }
                             }
                         }
                     }
@@ -119,7 +141,13 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
         });
 
         const data: GraphUserBalanceResponse = result.data.account;
-        return data.balances.map((balance) => transformToUserBalance(balance));
+        const colletaralTokenIds = data.balances.map(item => item.market?.pool.collateral_token_id || '').filter(x => x);
+        const tokenMetadata = await Promise.all(colletaralTokenIds.map(id => getCollateralTokenMetadata(id)));
+
+        return data.balances.map((balance) => {
+            const metadata = tokenMetadata.find(metadata => metadata.collateralTokenId === balance.market?.pool.collateral_token_id);
+            return transformToUserBalance(balance, metadata!)
+        });
 } catch (error) {
     console.error('[getBalancesForMarketByAccount]', error);
         return [];

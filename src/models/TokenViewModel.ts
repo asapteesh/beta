@@ -68,14 +68,14 @@ export function transformToTokenViewModels(
     collateralToken?: TokenViewModel,
 ): TokenViewModel[] {
     const poolBalances = transformToPoolBalanceViewModel(poolBalanceData, tags);
-    
+
     return tags.map((outcome, outcomeId) => {
         const poolBalance = poolBalances.find(poolBalance => poolBalance.outcomeId === outcomeId);
         const userBalance = userBalances.find(userBalance => userBalance.outcomeId === outcomeId);
 
         return {
             balance: userBalance?.balance || '0',
-            balanceFormatted: formatCollateralToken(userBalance?.balance ?? '0', 18),
+            balanceFormatted: formatCollateralToken(userBalance?.balance ?? '0', collateralToken?.decimals ?? 18),
             outcomeId,
             price: poolBalance?.price || 0,
             priceSymbol: collateralToken?.tokenSymbol || '$',

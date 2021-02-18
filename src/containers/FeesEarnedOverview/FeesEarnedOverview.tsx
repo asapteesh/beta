@@ -41,13 +41,12 @@ export default function FeesEarnedOverview({
                             </td>
                             <td>
                                 <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                    {formatCollateralToken(poolToken.balance)}
+                                    {formatCollateralToken(poolToken.balance, poolToken.collateralTokenDecimals)}
                                 </Link>
                             </td>
                             <td>
-                                {/** TODO: set the decimals */}
                                 <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                    {formatCollateralToken(poolToken.fees)}
+                                    {formatCollateralToken(poolToken.fees, poolToken.collateralTokenDecimals)}
                                 </Link>
                             </td>
                         </tr>

@@ -282,7 +282,7 @@ export async function burnOutcomeTokensRedeemCollateral(marketId: string, toBurn
 export async function getTokenWhiteListWithDefaultMetadata(): Promise<TokenMetadata[]> {
     const collateralTokens = [
         WRAPPED_NEAR_ACCOUNT_ID,
-        BANANAS_NEAR_ACCOUNT_ID,
+        // BANANAS_NEAR_ACCOUNT_ID,
     ];
 
     return collateralTokens.map(tokenId => createDefaultTokenMetadata(tokenId));

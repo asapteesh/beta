@@ -17,7 +17,7 @@ export function calculatePayout(tokens: TokenViewModel[], payoutNumerator: strin
             const token = tokens.find(token => token.outcomeId === outcome);
             if (!token) return;
 
-            const payout = new Big(token.balance).mul(num.div('1e18'));
+            const payout = new Big(token.balance).mul(num.div(`1e${token.decimals}`));
 
             claimable = claimable.add(payout);
         });

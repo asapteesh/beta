@@ -21,13 +21,13 @@ export default function Redeem({
         <div>
             <p>
                 {trans('redeem.description', {
-                    amount: FluxSdk.utils.formatToken(amountRedeemable, 18),
+                    amount: FluxSdk.utils.formatToken(amountRedeemable, market.collateralToken.decimals),
                     tokenSymbol: market.collateralToken.tokenSymbol,
                 })}
             </p>
             <Button className={s.confirmButton} onClick={onRedeemClick}>
                 {trans('redeem.action.submit', {
-                    amount: FluxSdk.utils.formatToken(amountRedeemable, 18),
+                    amount: FluxSdk.utils.formatToken(amountRedeemable, market.collateralToken.decimals),
                     tokenSymbol: market.collateralToken.tokenSymbol,
                 })}
             </Button>

@@ -64,13 +64,18 @@ export async function getWrappedNearToken(): Promise<TokenViewModel> {
         const wNearContract = await createWrappedNearContract();
         const sdk = await connectSdk();
         const accountId = sdk.getAccountId();
-        const balance = await wNearContract.getBalance(accountId);
 
-        return {
-            ...defaults,
-            balance,
-            balanceFormatted: formatCollateralToken(balance, 24),
+        if (accountId) {
+            const balance = await wNearContract.getBalance(accountId);
+
+            return {
+                ...defaults,
+                balance,
+                balanceFormatted: formatCollateralToken(balance, 24),
+            }
         }
+
+        return defaults;
     } catch (error) {
         console.error('[getWrappedNearToken]', error);
         return defaults;
@@ -92,11 +97,19 @@ export async function unwrapNear(amountIn: string) {
     wNearContract.unwrapNear(amountIn);
 }
 
-export async function getWrappedNearStorageBalance() {
+export async function getWrappedNearStorageBalance(): Promise<{ total: string, available: string }> {
     const wNearContract = await createWrappedNearContract();
     const sdk = await connectSdk();
-    
-    return wNearContract.getStorageBalance(sdk.getAccountId());
+    const accountId = sdk.getAccountId();
+
+    if (!accountId) {
+        return {
+            total: '0',
+            available: '0',
+        }
+    }
+
+    return wNearContract.getStorageBalance(accountId);
 }
 
 export async function getRequiredWrappedNearStorageDeposit() {

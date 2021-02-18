@@ -36,6 +36,7 @@ export async function createMarket(values: MarketFormValues): Promise<FetchResul
             outcomes,
             values.categories,
             values.resolutionDate,
+            // 2% fee
             new Big(`1e${tokenMetadata.decimals}`).div(50).toString(),
             FUNGIBLE_TOKEN_ACCOUNT_ID,
             values.extraInfo
@@ -165,8 +166,10 @@ export async function getMarkets(filters: MarketFilters): Promise<MarketViewMode
             }
         });
 
-        const dummyMainToken = await transformToMainTokenViewModel('');
-        const marketsPromises = result.data.market.items.map((market: GraphMarketResponse) => transformToMarketViewModel(market, dummyMainToken));
+        const marketsPromises = result.data.market.items.map(async (market: GraphMarketResponse) => {
+            const collateralToken = await transformToMainTokenViewModel(market.pool.collateral_token_id);
+            return transformToMarketViewModel(market, collateralToken);
+        });
 
         return Promise.all(marketsPromises);
     } catch (error) {

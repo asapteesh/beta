@@ -1,8 +1,7 @@
 import BN from "bn.js";
 
 import { Account, Contract } from "near-api-js";
-import { DEFAULT_FEE, DEFAULT_SLIPPAGE, FUNGIBLE_TOKEN_ACCOUNT_ID, MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_BASE, STORAGE_DEFAULT } from "../../config";
-import { toCollateralToken } from "../CollateralTokenService";
+import { DEFAULT_SLIPPAGE, MAX_GAS, PROTOCOL_ACCOUNT_ID, STORAGE_BASE, STORAGE_DEFAULT } from "../../config";
 import { SwapFormValues } from "../SwapService";
 import { connectWallet } from "../WalletService";
 

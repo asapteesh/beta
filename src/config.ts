@@ -9,8 +9,6 @@ export const WRAPPED_NEAR_ACCOUNT_ID = process.env.REACT_APP_WRAPPED_NEAR_ACCOUN
 export const MAX_GAS = new BN("300000000000000");
 export const STORAGE_DEFAULT = new BN("300800000000000000000000");
 export const STORAGE_BASE = new BN('30000000000000000000000');
-// @TODO this is not 1 share
-export const ONE = new BN((10 ** 18).toString());
 export const ZERO = new BN("0");
 export const BUY = "BUY";
 export const SELL = "SELL";

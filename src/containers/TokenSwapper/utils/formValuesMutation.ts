@@ -29,7 +29,8 @@ export default function mutateFormValues(formValues: SwapFormValues, tokens: Tok
             new Big(formValues.amountIn),
             formValues.toToken.outcomeId,
             poolBalances,
-            formattedFee
+            formattedFee,
+            collateralToken.decimals,
         ) :
         calcSellAmountInCollateral(
             new Big(formValues.amountIn),

@@ -1,7 +1,5 @@
 import Big from "big.js";
 
-// @TODO THIS IS NOT 1
-const ONE = new Big(10 ** 18);
 const ZERO = new Big(0);
 
 const ceilDiv = (a: Big, b: Big): Big => {
@@ -28,20 +26,22 @@ export const calcBuyAmountInShares = (
   outcomeIndex: number,
   poolBalances: Big[],
   fee: number,
+  denomination = 18,
 ): Big => {
-  if (outcomeIndex < 0 || outcomeIndex >= poolBalances.length) {
-    throw new Error(`Outcome index '${outcomeIndex}' must be between 0 and '${poolBalances.length - 1}'`);
-  }
-  if (investmentAmount.eq(0) || poolBalances.every(x => x.eq(0))) return ZERO;
+    if (outcomeIndex < 0 || outcomeIndex >= poolBalances.length) {
+        throw new Error(`Outcome index '${outcomeIndex}' must be between 0 and '${poolBalances.length - 1}'`);
+    }
+    if (investmentAmount.eq(0) || poolBalances.every(x => x.eq(0))) return ZERO;
 
-  const investmentAmountMinusFees = mulBN(investmentAmount, 1 - fee);
-  const newOutcomeBalance = poolBalances.reduce(
-    (accumulator, poolBalance, i) =>
-      i !== outcomeIndex
-        ? ceilDiv(accumulator.mul(poolBalance), poolBalance.add(investmentAmountMinusFees))
-        : accumulator.mul(poolBalance),
-    ONE,
-  );
+    const one = new Big(`1e${denomination}`);
+    const investmentAmountMinusFees = mulBN(investmentAmount, 1 - fee);
+    const newOutcomeBalance = poolBalances.reduce(
+        (accumulator, poolBalance, i) =>
+        i !== outcomeIndex
+            ? ceilDiv(accumulator.mul(poolBalance), poolBalance.add(investmentAmountMinusFees))
+            : accumulator.mul(poolBalance),
+        one,
+    );
 
-  return poolBalances[outcomeIndex].add(investmentAmountMinusFees).sub(ceilDiv(newOutcomeBalance, ONE));
+    return poolBalances[outcomeIndex].add(investmentAmountMinusFees).sub(ceilDiv(newOutcomeBalance, one));
 };

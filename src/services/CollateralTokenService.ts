@@ -1,13 +1,14 @@
 // import { utils } from 'near-api-js';
 import Big from 'big.js';
 
-import { FUNGIBLE_TOKEN_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from "../config";
+import { BANANAS_NEAR_ACCOUNT_ID, FUNGIBLE_TOKEN_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from "../config";
 import { isFetchResultSuccesful } from "../models/FetchResult";
 import { TokenMetadata } from '../models/TokenMetadata';
 import cache from '../utils/cache';
 import { getTokenPriceByTicker } from "./TokenPriceService";
-import { connectNear, connectSdk } from "./WalletService";
+import { connectSdk } from "./WalletService";
 import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
+import bananaTokenIcon from '../assets/images/icons/banana-token.svg';
 
 export function formatCollateralToken(amount: string, decimals: number, dp = 2): string {
     const denominator = new Big(10).pow(decimals);
@@ -46,16 +47,30 @@ export async function getCollateralTokenPrice(tokenAccountId: string): Promise<n
     return 0;
 }
 
+export function getTokenImageByCollateralAccountId(collateralTokenId: string): string | undefined {
+    if (collateralTokenId === WRAPPED_NEAR_ACCOUNT_ID) {
+        return wrappedNearIcon;
+    } else if (collateralTokenId === BANANAS_NEAR_ACCOUNT_ID) {
+        return bananaTokenIcon;
+    }
 
-export async function getCollateralTokenMetadata(collateralTokenId: string): Promise<TokenMetadata> {
-    const defaultMetadata = {
+    return undefined;
+}
+
+export function createDefaultTokenMetadata(collateralTokenId: string): TokenMetadata {
+    return {
         decimals: 18,
         name: collateralTokenId,
         reference: '',
         symbol: collateralTokenId,
         version: '0',
         collateralTokenId,
+        tokenImage: getTokenImageByCollateralAccountId(collateralTokenId),
     };
+}
+
+export async function getCollateralTokenMetadata(collateralTokenId: string): Promise<TokenMetadata> {
+    const defaultMetadata = createDefaultTokenMetadata(collateralTokenId);
 
     try {
         if (!collateralTokenId) return defaultMetadata;
@@ -65,16 +80,9 @@ export async function getCollateralTokenMetadata(collateralTokenId: string): Pro
             return sdk.getTokenMetadata(collateralTokenId);
         });
 
-        let tokenImage: string | undefined;
-
-        if (collateralTokenId === WRAPPED_NEAR_ACCOUNT_ID) {
-            tokenImage = wrappedNearIcon;
-        }
-
         return {
             ...metadata,
             collateralTokenId,
-            tokenImage,
         };
     } catch (error) {
         console.error('[getCollateralTokenMetadata]', error);

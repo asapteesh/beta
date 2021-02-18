@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MarketViewModel } from '../../models/Market';
 import { PoolToken } from '../../models/PoolToken';
+import { TokenMetadata } from '../../models/TokenMetadata';
 import { TokenViewModel } from '../../models/TokenViewModel';
 
 export type MarketState = Readonly<{
@@ -11,6 +12,7 @@ export type MarketState = Readonly<{
     marketLoading: boolean;
     editLoading: boolean,
     poolTokenBalance?: PoolToken;
+    tokenWhitelist: TokenMetadata[];
 }>;
 
 const initialState: MarketState = {
@@ -18,6 +20,7 @@ const initialState: MarketState = {
     editLoading: false,
     markets: [],
     resolutingMarkets: [],
+    tokenWhitelist: [],
 };
 
 const marketsSlice = createSlice({
@@ -28,6 +31,12 @@ const marketsSlice = createSlice({
             return ({
                 ...state,
                 marketError: action.payload,
+            });
+        },
+        setTokenWhitelist(state: MarketState, action: PayloadAction<TokenMetadata[]>): MarketState {
+            return ({
+                ...state,
+                tokenWhitelist: action.payload,
             });
         },
         setMarketLoading(state: MarketState, action: PayloadAction<boolean>): MarketState {
@@ -98,6 +107,7 @@ export const {
     appendMarkets,
     setMarketPoolTokenBalance,
     setMarketDetailTokens,
+    setTokenWhitelist,
 } = marketsSlice.actions;
 
 export default marketsSlice.reducer;

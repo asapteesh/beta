@@ -3,10 +3,11 @@ import React, { ChangeEvent, ReactElement } from 'react';
 import MuiSelect from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import s from './Select.module.scss';
+
 export interface SelectItem {
     value: string;
     label: string;
-
 }
 
 interface Props {
@@ -30,9 +31,9 @@ export default function Select({
     }
 
     return (
-        <MuiSelect value={value} onChange={handleChange}>
+        <MuiSelect className={s.select} value={value} onChange={handleChange} classes={{ icon: s.icon }}>
             {items.map((item) => (
-                <MenuItem value={item.value}>{item.label}</MenuItem>
+                <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
             ))}
         </MuiSelect>
     )

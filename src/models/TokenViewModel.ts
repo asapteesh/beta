@@ -4,7 +4,6 @@ import { PoolBalanceGraphData, transformToPoolBalanceViewModel } from "./PoolBal
 import { formatCollateralToken, getCollateralTokenBalance, getCollateralTokenMetadata, getCollateralTokenPrice } from '../services/CollateralTokenService';
 import { UserBalance } from "./UserBalance";
 import emojiSlice from "../utils/emojiSlice";
-import { TokenMetadata } from "./TokenMetadata";
 
 export interface TokenViewModel {
     tokenImage?: string;

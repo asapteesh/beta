@@ -1,4 +1,5 @@
 import { addDays } from "date-fns";
+import { FUNGIBLE_TOKEN_ACCOUNT_ID } from "../../../config";
 import { MarketFormValues } from "../../../services/MarketService";
 
 export default function createDefaultMarketFormValues(): MarketFormValues {
@@ -9,5 +10,6 @@ export default function createDefaultMarketFormValues(): MarketFormValues {
         outcomes: [''],
         description: '',
         extraInfo: '',
+        collateralTokenId: FUNGIBLE_TOKEN_ACCOUNT_ID,
     }
 }

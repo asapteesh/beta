@@ -1,0 +1,12 @@
+.select {
+    color: var(--c-text);
+    width: 100%;
+
+    &:before {
+        border-color: var(--c-text);
+    }
+}
+
+.icon {
+    color: var(--c-text);
+}

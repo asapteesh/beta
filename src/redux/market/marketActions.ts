@@ -1,8 +1,9 @@
 import { TokenViewModel } from "../../models/TokenViewModel";
 import { getAccountInfo, getPoolBalanceForMarketByAccount } from "../../services/AccountService";
-import { createMarket, getMarketById, getMarketOutcomeTokens, getMarkets, getResolutingMarkets, MarketFilters, MarketFormValues } from "../../services/MarketService";
+import { getCollateralTokenMetadata } from "../../services/CollateralTokenService";
+import { createMarket, getMarketById, getMarketOutcomeTokens, getMarkets, getResolutingMarkets, getTokenWhiteListWithDefaultMetadata, MarketFilters, MarketFormValues } from "../../services/MarketService";
 import { seedPool, exitPool, SeedPoolFormValues } from "../../services/PoolService";
-import { appendMarkets, setMarketErrors, setMarketLoading, setMarketDetail, setMarkets, setResolutingMarkets, setMarketEditLoading, setMarketPoolTokenBalance, setMarketDetailTokens } from "./market";
+import { appendMarkets, setMarketErrors, setMarketLoading, setMarketDetail, setMarkets, setResolutingMarkets, setMarketEditLoading, setMarketPoolTokenBalance, setMarketDetailTokens, setTokenWhitelist } from "./market";
 
 export function createNewMarket(values: MarketFormValues) {
     return async (dispatch: Function) => {
@@ -109,5 +110,21 @@ export function seedPoolAction(marketId: string, tokenId: string, values: SeedPo
 export function exitPoolAction(marketId: string, amountIn: string) {
     return async (dispatch: Function) => {
         await exitPool(marketId, amountIn);
+    }
+}
+
+export function loadTokenWhitelist() {
+    return async (dispatch: Function) => {
+        // First create a dummy list
+        const whitelist = await getTokenWhiteListWithDefaultMetadata();
+        dispatch(setTokenWhitelist(whitelist));
+
+        // Now we are going to fill in the real metadata
+        const metadataPromises = Object.values(whitelist).map((metadata) => {
+            return getCollateralTokenMetadata(metadata.collateralTokenId);
+        });
+
+        const realMetadata = await Promise.all(metadataPromises);
+        dispatch(setTokenWhitelist(realMetadata));
     }
 }

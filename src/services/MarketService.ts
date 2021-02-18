@@ -1,14 +1,15 @@
 import { gql } from '@apollo/client';
 import Big from 'big.js';
 import { format } from 'date-fns';
-import { DEFAULT_FEE, FUNGIBLE_TOKEN_ACCOUNT_ID } from '../config';
+import { DEFAULT_FEE, BANANAS_NEAR_ACCOUNT_ID, FUNGIBLE_TOKEN_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from '../config';
 
 import { FetchResult, FetchResultType } from '../models/FetchResult';
 import { GraphMarketResponse, MarketCategory, MarketViewModel, transformToMarketViewModel } from '../models/Market';
+import { TokenMetadata } from '../models/TokenMetadata';
 import { TokenViewModel, transformToMainTokenViewModel, transformToTokenViewModels } from '../models/TokenViewModel';
 import { UserBalance } from '../models/UserBalance';
 import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
-import { getCollateralTokenMetadata } from './CollateralTokenService';
+import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
 import createProtocolContract from './contracts/ProtocolContract';
 import { graphqlClient } from './GraphQLService';
 import { connectSdk } from './WalletService';
@@ -20,10 +21,8 @@ export interface MarketFormValues {
     description: string;
     outcomes: string[];
     extraInfo: string;
+    collateralTokenId: string;
 }
-
-// @ts-ignore
-window.b = Big;
 
 export async function createMarket(values: MarketFormValues): Promise<FetchResult<any, string>> {
     try {
@@ -278,4 +277,13 @@ export function getEligibleAmountForRedeeming(tokens: TokenViewModel[]): Big {
 export async function burnOutcomeTokensRedeemCollateral(marketId: string, toBurn: string) {
     const sdk = await connectSdk();
     await sdk.burnOutcomeTokensRedeemCollateral(marketId, toBurn);
+}
+
+export async function getTokenWhiteListWithDefaultMetadata(): Promise<TokenMetadata[]> {
+    const collateralTokens = [
+        WRAPPED_NEAR_ACCOUNT_ID,
+        BANANAS_NEAR_ACCOUNT_ID,
+    ];
+
+    return collateralTokens.map(tokenId => createDefaultTokenMetadata(tokenId));
 }

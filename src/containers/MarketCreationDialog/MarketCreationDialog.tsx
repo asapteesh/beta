@@ -13,15 +13,20 @@ import AddableInputs from '../AddableInputs';
 import createDefaultMarketFormValues from './utils/createDefaultMarketFormValues';
 
 import s from './MarketCreationDialog.module.scss';
+import Select from '../../components/Select';
+import { SelectItem } from '../../components/Select/Select';
+import { TokenMetadata } from '../../models/TokenMetadata';
 
 interface Props {
     open: boolean;
+    tokenWhitelist: TokenMetadata[];
     onRequestClose: () => void;
     onSubmit: (values: MarketFormValues) => void;
 }
 
 export default function MarketCreationDialog({
     open,
+    tokenWhitelist,
     onRequestClose,
     onSubmit,
 }: Props): ReactElement {
@@ -85,6 +90,13 @@ export default function MarketCreationDialog({
         });
     }
 
+    function handleCollateralChange(item: SelectItem) {
+        setFormValues({
+            ...formValues,
+            collateralTokenId: item.value,
+        });
+    }
+
     return (
         <Dialog open={open} title="" onRequestClose={onRequestClose} onSubmitClick={handleFormSubmit}>
             <form className={s.filters} ref={formRef}>
@@ -104,6 +116,19 @@ export default function MarketCreationDialog({
                             />
                         ))}
                     </div>
+                </div>
+                <div className={s.inputsWrapper}>
+                    <label className={s.label}>
+                        {trans('marketCreation.label.collateralToken')}
+                    </label>
+                    <Select
+                        onChange={handleCollateralChange}
+                        value={formValues.collateralTokenId}
+                        items={tokenWhitelist.map((metadata) => ({
+                            label: metadata.symbol,
+                            value: metadata.collateralTokenId,
+                        }))}
+                    />
                 </div>
                 <div className={s.inputsWrapper}>
                     <label className={s.label}>

@@ -38,6 +38,7 @@ export default function WrapNearDialog({
     onDepositClick,
 }: Props): ReactElement {
     const [formValues, setFormValues] = useState(createDefaultWrapNearFormValues());
+    const [decimalsBehindComma, setDecimalsBehindComma] = useState(2);
 
     function handleSwitchTokenPlaces() {
         const wrapType = formValues.type === 'unwrap' ? 'wrap' : 'unwrap';
@@ -48,10 +49,12 @@ export default function WrapNearDialog({
             type: wrapType,
         });
 
+        setDecimalsBehindComma(2);
         onRequestSwitchPairs();
     }
 
     function handleBalanceClick() {
+        setDecimalsBehindComma(2);
         setFormValues({
             ...formValues,
             amountIn: input.balance,
@@ -59,6 +62,11 @@ export default function WrapNearDialog({
     }
 
     function handleInputChange(value: string) {
+        const splittedValue = value.split('.');
+        const decimals = splittedValue[1] ?? '';
+
+        setDecimalsBehindComma(decimals.length);
+
         setFormValues({
             ...formValues,
             amountIn: value !== '' ? toCollateralToken(value, input.decimals) : '0',
@@ -93,7 +101,7 @@ export default function WrapNearDialog({
                         </div>
                         <TokenSelect
                             onTokenSwitch={() => {}}
-                            value={formatCollateralToken(formValues.amountIn, input.decimals)}
+                            value={formatCollateralToken(formValues.amountIn, input.decimals, decimalsBehindComma)}
                             tokens={[input]}
                             selectedToken={input}
                             onValueChange={(v) => handleInputChange(v)}
@@ -111,7 +119,7 @@ export default function WrapNearDialog({
                         </div>
                         <TokenSelect
                             onTokenSwitch={() => {}}
-                            value={formatCollateralToken(formValues.amountIn, output.decimals)}
+                            value={formatCollateralToken(formValues.amountIn, output.decimals, decimalsBehindComma)}
                             tokens={[output]}
                             selectedToken={output}
                             disabledInput

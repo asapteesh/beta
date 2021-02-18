@@ -9,12 +9,12 @@ import { getTokenPriceByTicker } from "./TokenPriceService";
 import { connectNear, connectSdk } from "./WalletService";
 import wrappedNearIcon from '../assets/images/icons/wrapped-near.svg';
 
-export function formatCollateralToken(amount: string, decimals = 18, dp = 2): string {
+export function formatCollateralToken(amount: string, decimals: number, dp = 2): string {
     const denominator = new Big(10).pow(decimals);
     return new Big(amount).div(denominator).toFixed(dp);
 }
 
-export function toCollateralToken(amount: string, decimals = 18): string {
+export function toCollateralToken(amount: string, decimals: number): string {
     const denominator = new Big(10).pow(decimals);
     return new Big(amount).mul(denominator).toFixed(0);
 }

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import Big from 'big.js';
 import { format } from 'date-fns';
-import { FUNGIBLE_TOKEN_ACCOUNT_ID } from '../config';
+import { DEFAULT_FEE, FUNGIBLE_TOKEN_ACCOUNT_ID } from '../config';
 
 import { FetchResult, FetchResultType } from '../models/FetchResult';
 import { GraphMarketResponse, MarketCategory, MarketViewModel, transformToMarketViewModel } from '../models/Market';
@@ -30,15 +30,15 @@ export async function createMarket(values: MarketFormValues): Promise<FetchResul
         const protocol = await createProtocolContract();
         const outcomes = values.outcomes.length > 2 ? values.outcomes : ['YES', 'NO'];
         const tokenMetadata = await getCollateralTokenMetadata(FUNGIBLE_TOKEN_ACCOUNT_ID);
+        const formattedFee = 100 / DEFAULT_FEE;
 
         protocol.createMarket(
             values.description,
             outcomes,
             values.categories,
             values.resolutionDate,
-            // 2% fee
-            new Big(`1e${tokenMetadata.decimals}`).div(50).toString(),
-            FUNGIBLE_TOKEN_ACCOUNT_ID,
+            new Big(`1e${tokenMetadata.decimals}`).div(formattedFee).toString(),
+            values.collateralTokenId,
             values.extraInfo
         );
 

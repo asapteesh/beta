@@ -26,7 +26,7 @@ export const calcBuyAmountInShares = (
   outcomeIndex: number,
   poolBalances: Big[],
   fee: number,
-  denomination = 18,
+  denomination: number,
 ): Big => {
     if (outcomeIndex < 0 || outcomeIndex >= poolBalances.length) {
         throw new Error(`Outcome index '${outcomeIndex}' must be between 0 and '${poolBalances.length - 1}'`);

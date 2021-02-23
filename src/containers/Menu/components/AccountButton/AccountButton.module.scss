@@ -1,0 +1,23 @@
+@import "../../../../styles/helpers/variables";
+@import "../../../../styles/helpers/mixins";
+
+.accountMenuButton {
+    display: none;
+    border: 1px solid var(--c-tertiary);
+    background-color: transparent;
+    color: var(--c-text);
+    max-height: 2.5rem;
+    overflow: hidden;
+
+    @include for-size($default-bigger-screen-breakpoint) {
+        display: flex;
+    }
+}
+
+.iconButton {
+    color: var(--c-text);
+
+    @include for-size($default-bigger-screen-breakpoint) {
+        display: none;
+    }
+}

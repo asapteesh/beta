@@ -15,7 +15,7 @@ export default function DarkmodeButton() {
     }, [isDarkmodeActive]);
 
     return (
-        <IconButton aria-label="delete" onClick={handleButtonClick}>
+        <IconButton aria-label="darkmode" onClick={handleButtonClick}>
             {!isDarkmodeActive && <DarkmodeIcon className={s.icon} />}
             {isDarkmodeActive && <LightmodeIcon className={s.icon} />}
         </IconButton>

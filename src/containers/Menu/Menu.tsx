@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { Link } from "react-router-dom";
 import MuiMenu from '@material-ui/core/Menu';
 import MuiMenuItem from '@material-ui/core/MenuItem';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import Button from "../../components/Button";
 import trans from "../../translation/trans";
@@ -11,6 +12,7 @@ import { formatCollateralToken } from "../../services/CollateralTokenService";
 
 import s from './Menu.module.scss';
 import DarkmodeButton from "../../components/DarkmodeButton";
+import AccountButton from "./components/AccountButton/AccountButton";
 
 interface Props {
     className?: string;
@@ -72,10 +74,9 @@ export default function Menu({
 
                     {account && (
                         <>
-                            <Button onClick={handleMenuClick} className={s.accountMenuButton}>
-                                {account.accountId}
-                            </Button>
+                            <AccountButton account={account} onClick={handleMenuClick} />
                             <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
+                                <MuiMenuItem disabled>{account.accountId}</MuiMenuItem>
                                 <MuiMenuItem disabled>NEAR: {formatCollateralToken(account.balance, 24)} Ⓝ</MuiMenuItem>
                                 <MuiMenuItem onClick={handleWrapNearClick}>{trans('menu.wrapNear')}</MuiMenuItem>
                                 <MuiMenuItem onClick={handleProfileClick}>{trans('menu.profile')}</MuiMenuItem>

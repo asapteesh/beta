@@ -1,7 +1,7 @@
 // import { utils } from 'near-api-js';
 import Big from 'big.js';
 
-import { BANANAS_NEAR_ACCOUNT_ID, FUNGIBLE_TOKEN_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from "../config";
+import { BANANAS_NEAR_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from "../config";
 import { isFetchResultSuccesful } from "../models/FetchResult";
 import { TokenMetadata } from '../models/TokenMetadata';
 import cache from '../utils/cache';
@@ -36,7 +36,7 @@ export async function getCollateralTokenBalance(tokenAccountId: string, accountI
 }
 
 export async function getCollateralTokenPrice(tokenAccountId: string): Promise<number> {
-    if (tokenAccountId === FUNGIBLE_TOKEN_ACCOUNT_ID) {
+    if (tokenAccountId === WRAPPED_NEAR_ACCOUNT_ID) {
         const response = await getTokenPriceByTicker('near');
 
         if (isFetchResultSuccesful(response)) {

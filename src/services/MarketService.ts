@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import Big from 'big.js';
 import { format } from 'date-fns';
-import { DEFAULT_FEE, BANANAS_NEAR_ACCOUNT_ID, FUNGIBLE_TOKEN_ACCOUNT_ID, WRAPPED_NEAR_ACCOUNT_ID } from '../config';
+import { DEFAULT_FEE } from '../config';
 
 import { FetchResult, FetchResultType } from '../models/FetchResult';
 import { GraphMarketResponse, MarketCategory, MarketViewModel, transformToMarketViewModel } from '../models/Market';
@@ -28,7 +28,7 @@ export async function createMarket(values: MarketFormValues): Promise<FetchResul
     try {
         const protocol = await createProtocolContract();
         const outcomes = values.outcomes.length > 2 ? values.outcomes : ['YES', 'NO'];
-        const tokenMetadata = await getCollateralTokenMetadata(FUNGIBLE_TOKEN_ACCOUNT_ID);
+        const tokenMetadata = await getCollateralTokenMetadata(values.collateralTokenId);
         const formattedFee = 100 / DEFAULT_FEE;
 
         protocol.createMarket(
@@ -280,10 +280,7 @@ export async function burnOutcomeTokensRedeemCollateral(marketId: string, toBurn
 }
 
 export async function getTokenWhiteListWithDefaultMetadata(): Promise<TokenMetadata[]> {
-    const collateralTokens = [
-        WRAPPED_NEAR_ACCOUNT_ID,
-        // BANANAS_NEAR_ACCOUNT_ID,
-    ];
-
-    return collateralTokens.map(tokenId => createDefaultTokenMetadata(tokenId));
+    const sdk = await connectSdk();
+    const whitelist = await sdk.getTokenWhitelist();
+    return whitelist.map(token => createDefaultTokenMetadata(token.tokenId));
 }

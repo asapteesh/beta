@@ -19,11 +19,14 @@
     "menu.logout": "Logout",
     "menu.profile": "Positions",
     "menu.wrapNear": "Wrap NEAR",
-    "menu.disclaimer": "By using this non-custodial application you are acknowledging that this application is unaudited.",
 
     "home.title.head": ":appName - Markets",
     "home.title.welcome": "Welcome :username",
     "home.title.latestTrends": "These are the latest trends",
+
+    "disclaimer.title": "Disclaimer",
+    "disclaimer.description": "This is a community deployed open-source version of Flux Protocol and is unaudited. You are acknowledging this software is provided as is with no warranty or guarantee.",
+    "disclaimer.action.accept": "Accept",
 
     "wrapNearDialog.title": "Wrap NEAR",
     "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Flux. Make sure to leave 5 NEAR for gas fees to unwrap your near",

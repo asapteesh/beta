@@ -4,21 +4,12 @@
 .menu {
     width: 100%;
     background-color: var(--c-primary-dark);
-    height: 6.625rem;
+    height: 3.625rem;
     display: flex;
     justify-content: center;
     position: relative;
     flex-wrap: wrap;
     z-index: 100;
-
-    &__subheader{
-        width: 100%;
-        background-color: var(--c-red);
-        display: block;
-        text-align: center;
-        color: var(--c-white);
-        padding-top: 0.9375rem;
-    }
 
     &__items {
         width: 100%;

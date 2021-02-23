@@ -7,6 +7,7 @@ import MenuConnector from "../../connectors/MenuConnector";
 import styles from './Page.module.scss';
 import WrapNearDialogConnector from "../../connectors/WrapNearDialogConnector";
 import { setDarkmode } from "../../utils/darkmode";
+import DisclaimerDialogConnector from "../../connectors/DisclaimerDialogConnector";
 interface Props {
     className?: string;
     bodyClassName?: string;
@@ -37,6 +38,7 @@ export default function Page({
             {/* Normally don't put connectors in containers.. */}
             {hasNavigation && <MenuConnector />}
             <WrapNearDialogConnector />
+            <DisclaimerDialogConnector />
             <main className={pageBodyClassName}>
                 {children}
             </main>

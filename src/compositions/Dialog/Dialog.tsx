@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import classnames from 'classnames';
 import { default as MuiDialog } from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -16,6 +17,7 @@ interface Props {
     onSubmitClick: () => void;
     canSubmit?: boolean;
     hideButtons?: boolean;
+    paperClassName?: string;
 }
 
 export default function Dialog({
@@ -26,9 +28,10 @@ export default function Dialog({
     onSubmitClick,
     canSubmit = true,
     hideButtons = false,
+    paperClassName = '',
 }: PropsWithChildren<Props>) {
     return (
-        <MuiDialog open={open} classes={{ paper: s.paper }}>
+        <MuiDialog open={open} classes={{ paper: classnames(s.paper, paperClassName) }}>
             <DialogTitle className={s.title}>
                 {title}
             </DialogTitle>

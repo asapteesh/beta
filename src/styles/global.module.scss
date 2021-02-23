@@ -92,9 +92,9 @@ html, body {
 html {
     @include lightmode-variables;
 
-    @media (prefers-color-scheme: dark) {
-        @include darkmode-variables;
-    }
+    // @media (prefers-color-scheme: dark) {
+    //     @include darkmode-variables;
+    // }
 
     &[data-theme="dark"] {
         @include darkmode-variables;

@@ -34,7 +34,7 @@ const checkIfDarkmodeIsActive = (): boolean => {
     const darkmodeInStorage = getStoredDarkmode();
     const { userPrefersDark } = userThemePreference();
 
-    return darkmodeInDocumentTheme || darkmodeInStorage || userPrefersDark || false;
+    return darkmodeInDocumentTheme || darkmodeInStorage || false;
 };
 
 const setDarkmode = (state: boolean): void => {

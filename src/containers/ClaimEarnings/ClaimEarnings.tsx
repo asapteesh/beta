@@ -44,7 +44,7 @@ export default function ClaimFees({
                 <p>
                     {trans('market.claimEarnings.alreadyClaimed', {
                         payout: market.claim.payoutFormatted,
-                        tokenName: market.collateralToken.tokenName,
+                        tokenName: market.collateralToken.tokenSymbol,
                     })}
                 </p>
             )}

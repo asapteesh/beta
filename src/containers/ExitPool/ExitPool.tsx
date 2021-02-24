@@ -72,6 +72,7 @@ export default function ExitPool({
             <p>
                 {trans('exitPool.label.feesEarned', {
                     amount: formatCollateralToken(poolToken.fees, market.collateralToken.decimals, 8),
+                    tokenSymbol: market.collateralToken.tokenSymbol,
                 })}
             </p>
             <Button onClick={handleSubmit} className={s.confirm} disabled={!errors.canSubmit}>

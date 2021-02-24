@@ -40,7 +40,7 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
             query: gql`
                 query Account($accountId: String!) {
                     account: getAccount(accountId: $accountId) {
-                        earned_fees {
+                        earned_fees(removeZeroBalances: true, removeClaimedBalances: false) {
                             fees
                             outcomeId
                             poolId
@@ -53,7 +53,7 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
                                 }
                             }
                         }
-                        balances {
+                        balances(removeZeroBalances: true, removeClaimedBalances: false) {
                             balance
                             outcome_id
                             pool_id

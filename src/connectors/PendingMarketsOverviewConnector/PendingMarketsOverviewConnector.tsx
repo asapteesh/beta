@@ -22,6 +22,7 @@ export default function PendingMarketsOverviewConnector() {
             rootPath={routePaths.pending()}
             defaultMarketFilters={{
                 expired: true,
+                finalized: false,
             }}
         />
     );

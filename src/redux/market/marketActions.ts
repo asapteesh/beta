@@ -98,6 +98,7 @@ export function fetchPendingMarkets(filters: MarketFilters, append?: boolean) {
             const markets = await getMarkets({
                 ...filters,
                 expired: true,
+                finalized: false,
             });
 
             if (append) {

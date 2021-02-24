@@ -6,7 +6,7 @@
     "global.token": "token",
     "global.balance": "balance",
     "global.comments": "Comments",
-    "global.poolToken": "Pool",
+    "global.poolToken": "Liquidity Provider Token",
 
     "global.action.cancel": "Cancel",
     "global.action.submit": "Submit",

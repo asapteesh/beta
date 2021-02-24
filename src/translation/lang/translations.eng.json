@@ -29,7 +29,7 @@
     "disclaimer.action.accept": "Accept",
 
     "wrapNearDialog.title": "Wrap NEAR",
-    "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Flux. Make sure to leave 5 NEAR for gas fees to unwrap your near",
+    "wrapNearDialog.description": "Wrapping NEAR allows you to trade on Flux. Make sure to leave 1 NEAR for gas fees to unwrap your near",
     "wrapNearDialog.errors.amountIn.exactBalance": "Please leave some balance for transaction fees",
     "wrapNearDialog.errors.amountIn.notEnoughBalance": "Not enough balance",
     "wrapNearDialog.requiredDeposit.description": "A small deposit of :amount NEAR is required in order to swap NEAR for wNEAR due storage costs",

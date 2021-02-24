@@ -16,6 +16,7 @@ export enum MarketCategory {
 }
 
 export interface GraphMarketResponse {
+    creation_date: string | null;
     description: string;
     outcome_tags: string[];
     end_time: string;
@@ -45,6 +46,7 @@ export interface GraphMarketResponse {
 export interface MarketViewModel {
     id: string;
     finalized: boolean;
+    creationDate?: Date;
     owner: string;
     description: string;
     resolutionDate: Date;
@@ -74,6 +76,7 @@ export async function transformToMarketViewModel(
     return {
         id: graphResponse.id,
         category: graphResponse.categories || [],
+        creationDate: graphResponse.creation_date ? new Date(Number(graphResponse.creation_date)) : undefined,
         description: graphResponse.description,
         extraInfo: graphResponse.extra_info,
         finalized: graphResponse.finalized,

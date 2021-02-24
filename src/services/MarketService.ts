@@ -87,6 +87,7 @@ export async function getMarketById(marketId: string): Promise<MarketViewModel |
                         id
                         volume
                         categories
+                        creation_date
                         payout_numerator
                         claimed_earnings(accountId: $accountId) {
                             payout

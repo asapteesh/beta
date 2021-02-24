@@ -30,6 +30,17 @@ export default function MarketHeader({
 
                     <h1 className={s.title}>{market.description}</h1>
 
+                    {market.creationDate && (
+                        <div className={s.resolutionDate}>
+                            <span className={s['market-header__resolution-date-title']}>
+                                {trans('market.startDate')} —&nbsp;
+                            </span>
+                            <span className={s['market-header__resolution-date-stamp']}>
+                                {formatResolutionDate(market.creationDate)}
+                            </span>
+                        </div>
+                    )}
+
                     <div className={s.resolutionDate}>
                         <span className={s['market-header__resolution-date-title']}>
                             {trans('market.resolutionDate')} —&nbsp;

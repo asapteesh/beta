@@ -77,7 +77,7 @@ export default function ExitPool({
                 })}
             </p>
 
-            <ExitOverview market={market} poolToken={poolToken} />
+            <ExitOverview market={market} amount={formValues.amountIn} />
             <Button onClick={handleSubmit} className={s.confirm} disabled={!errors.canSubmit}>
                 {trans('exitPool.action.exitPool')}
             </Button>

@@ -2,8 +2,7 @@ import React, { ReactElement } from 'react';
 import { DEFAULT_SLIPPAGE } from '../../../../config';
 import { SwapFormValues } from '../../../../services/SwapService';
 import trans from '../../../../translation/trans';
-
-import s from './SwapOverview.module.scss';
+import Overview from "./../../../../components/Overview";
 import mutateFormValues from './utils/overviewMutation';
 
 interface SwapOverviewProps {
@@ -13,30 +12,23 @@ interface SwapOverviewProps {
 export default function SwapOverview({formValues}: SwapOverviewProps): ReactElement {
     let formattedFormValues = mutateFormValues(formValues);
     const collateralToken = formValues.fromToken.isCollateralToken ? formValues.fromToken : formValues.toToken;
-
-    return (
-        <div className={s['swap-overview']}>
-            <div className={s['swap-overview__info-row']}>
-                <span className={s['swap-overview__info-key']}>{trans('market.overview.rate')}</span>
-                <span className={s['swap-overview__info-value']}>{formattedFormValues.rateInOut} {formValues.fromToken.tokenSymbol} / {formValues.toToken.tokenSymbol}</span>
-            </div>
-
-            <div className={s['swap-overview__info-row']}>
-                <span className={s['swap-overview__info-key']}>{trans('market.overview.inverseRate')}</span>
-                <span className={s['swap-overview__info-value']}>{formattedFormValues.rateOutIn} {formValues.toToken.tokenSymbol} / {formValues.fromToken.tokenSymbol}</span>
-            </div>
-
-            <div className={s['swap-overview__info-row']}>
-                <span className={s['swap-overview__info-key']}>{trans('market.overview.estimatedFee')}</span>
-                <span className={s['swap-overview__info-value']}>
-                    {formattedFormValues.feePaid} {collateralToken.tokenSymbol}
-                </span>
-            </div>
-
-            <div className={s['swap-overview__info-row']}>
-                <span className={s['swap-overview__info-key']}>{trans('market.overview.maxSlippage')}</span>
-                <span className={s['swap-overview__info-value']}>{DEFAULT_SLIPPAGE}%</span>
-            </div>
-        </div>
-    );
+    const overViewData = [
+        {
+            key: trans('market.overview.rate'),
+            value: `${formattedFormValues.rateInOut} ${formValues.fromToken.tokenSymbol} / ${formValues.toToken.tokenSymbol}`
+        },
+        {
+            key: trans('market.overview.inverseRate'),
+            value: `${formattedFormValues.rateOutIn} ${formValues.toToken.tokenSymbol} / ${formValues.fromToken.tokenSymbol}`
+        },
+        {
+            key: trans('market.overview.estimatedFee'),
+            value: `${formattedFormValues.feePaid} ${collateralToken.tokenSymbol}`
+        },
+        {
+            key: trans('market.overview.maxSlippage'),
+            value: `${DEFAULT_SLIPPAGE}%`
+        },
+    ]
+    return <Overview data={overViewData} />;
 }

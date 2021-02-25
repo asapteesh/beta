@@ -1,0 +1,21 @@
+.swap-overview {
+    border: 1px solid rgba(var(--c-white-rgb), .5);
+    background-color: var(--c-primary-dark);
+    border-radius: 0.75rem;
+    padding: 0.6875rem;
+
+    &__info-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        margin-bottom: 1.25rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__info-key {
+        font-weight: bold;
+    }
+}

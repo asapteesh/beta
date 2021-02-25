@@ -7,6 +7,7 @@ import { PoolToken, transformPoolTokenToTokenViewModel } from '../../models/Pool
 import { formatCollateralToken, toCollateralToken } from '../../services/CollateralTokenService';
 import trans from '../../translation/trans';
 import TokenSelect from '../TokenSelect';
+import ExitOverview from './components/ExitOverview/ExitOverview';
 
 import s from './ExitPool.module.scss';
 import createDefaultExitPoolFormValues, { ExitPoolFormValues } from './services/createDefaultExitPoolFormValues';
@@ -75,6 +76,8 @@ export default function ExitPool({
                     tokenSymbol: market.collateralToken.tokenSymbol,
                 })}
             </p>
+
+            <ExitOverview market={market} poolToken={poolToken} />
             <Button onClick={handleSubmit} className={s.confirm} disabled={!errors.canSubmit}>
                 {trans('exitPool.action.exitPool')}
             </Button>

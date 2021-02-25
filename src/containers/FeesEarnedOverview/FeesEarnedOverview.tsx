@@ -23,36 +23,39 @@ export default function FeesEarnedOverview({
             <header className={s.header}>
                 {trans('feesEarned.title')}
             </header>
-            <table className={s.table}>
-                <thead className={s.tableHead}>
-                    <tr className={s.tableHeadRow}>
-                        <th>{trans('feesEarned.table.market')}</th>
-                        <th>{trans('feesEarned.table.balance')}</th>
-                        <th>{trans('feesEarned.table.feesEarned')}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {poolTokens.map((poolToken) => (
-                        <tr className={s.tableRow} key={`${poolToken.marketId}_${poolToken.outcomeId}`}>
-                            <td className={s.description}>
-                                <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                    {poolToken.marketDescription}
-                                </Link>
-                            </td>
-                            <td>
-                                <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                    {formatCollateralToken(poolToken.balance, poolToken.collateralTokenDecimals)}
-                                </Link>
-                            </td>
-                            <td>
-                                <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                    {formatCollateralToken(poolToken.fees, poolToken.collateralTokenDecimals)}
-                                </Link>
-                            </td>
+            <div className={s.tableWrapper}>
+
+                <table className={s.table}>
+                    <thead className={s.tableHead}>
+                        <tr className={s.tableHeadRow}>
+                            <th>{trans('feesEarned.table.market')}</th>
+                            <th>{trans('feesEarned.table.balance')}</th>
+                            <th>{trans('feesEarned.table.feesEarned')}</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {poolTokens.map((poolToken) => (
+                            <tr className={s.tableRow} key={`${poolToken.marketId}_${poolToken.outcomeId}`}>
+                                <td className={s.description}>
+                                    <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
+                                        {poolToken.marketDescription}
+                                    </Link>
+                                </td>
+                                <td>
+                                    <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
+                                        {formatCollateralToken(poolToken.balance, poolToken.collateralTokenDecimals)}
+                                    </Link>
+                                </td>
+                                <td>
+                                    <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
+                                        {formatCollateralToken(poolToken.fees, poolToken.collateralTokenDecimals)}
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </section>
     );
 }

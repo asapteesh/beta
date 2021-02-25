@@ -8,13 +8,15 @@ export interface UserBalance {
     marketDescription: string;
     marketStatus: string;
     outcomeTag: string;
-    collateralTokenDecimals: number;
+    collateralTokenMetadata: TokenMetadata;
+    spent: string;
 }
 
 export interface GraphUserBalancesItem {
     balance: string;
     outcome_id: number;
     pool_id: string;
+    spent?: string;
     market?: {
         description: string;
         outcome_tags: string[];
@@ -54,10 +56,11 @@ export function transformToUserBalance(graphData: GraphUserBalancesItem, collate
     return {
         balance: graphData.balance,
         outcomeId: graphData.outcome_id,
+        spent: graphData.spent ?? '0',
         marketId: graphData.pool_id,
         marketDescription: graphData.market?.description || '',
         marketStatus: getMarketStatus(graphData.market),
         outcomeTag: graphData.market?.outcome_tags[graphData.outcome_id] || '',
-        collateralTokenDecimals: collateralTokenMetadata.decimals,
+        collateralTokenMetadata,
     }
 }

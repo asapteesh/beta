@@ -49,7 +49,7 @@
 
     "market.title.head": ":appName - :description",
     "market.extraInfo": "Extra info",
-    "market.startDate": "Market started",
+    "market.startDate": "Market started (in UTC)",
     "market.resolutionDate": "Resolution date (in UTC)",
     "market.action.confirmSwap": "Confirm swap",
     "market.action.confirmLiquidity": "Add Liquidity",

@@ -127,12 +127,7 @@ export default function TokenSwapper({
                 />
             </div>
 
-            <div className={s['token-swapper__token']}>
-                <div className={s['token-swapper__token-header']}>
-                    <span>{trans('market.label.overview', {}, true)}</span>
-                </div>
-                <SwapOverview formValues={mutation}/>
-            </div>
+            <SwapOverview formValues={mutation}/>
 
             <Error error={errors.message} />
 

@@ -29,10 +29,10 @@ export default function MarketStatisticsConnector({
 
         // @ts-ignore
         clearInterval(intervalId.current);
-        dispatch(fetchPricesHistoryByMarketId(market.id, period));
+        dispatch(fetchPricesHistoryByMarketId(market, period));
 
         intervalId.current = setInterval(() => {
-            dispatch(fetchPricesHistoryByMarketId(market.id, period));
+            dispatch(fetchPricesHistoryByMarketId(market, period));
         }, PRICE_HISTORY_INTERVAL_MS);
     }
 
@@ -49,10 +49,10 @@ export default function MarketStatisticsConnector({
 
         // @ts-ignore
         clearInterval(intervalId.current);
-        dispatch(fetchPricesHistoryByMarketId(market.id, period || undefined));
+        dispatch(fetchPricesHistoryByMarketId(market, period || undefined));
 
         intervalId.current = setInterval(() => {
-            dispatch(fetchPricesHistoryByMarketId(market.id, period || undefined));
+            dispatch(fetchPricesHistoryByMarketId(market, period || undefined));
         }, PRICE_HISTORY_INTERVAL_MS);
     }, [market, dispatch]);
 

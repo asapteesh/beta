@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import { subDays, subMonths, subWeeks } from 'date-fns';
+import { MarketViewModel } from '../models/Market';
 import { PriceHistoryData } from '../models/PriceHistoryData';
 import { graphqlClient } from './GraphQLService';
 
@@ -11,7 +12,7 @@ export enum Period {
     All = 'all',
 }
 
-export async function getPricesHistoryByMarketId(marketId: string, period: Period): Promise<PriceHistoryData[]> {
+export async function getPricesHistoryByMarketId(market: MarketViewModel, period: Period): Promise<PriceHistoryData[]> {
     try {
         const now = new Date();
         let chosenPeriondDate = new Date();
@@ -54,7 +55,7 @@ export async function getPricesHistoryByMarketId(marketId: string, period: Perio
                 }
             `,
             variables: {
-                marketId,
+                marketId: market.id,
                 beginTimestamp: chosenPeriondDate.getTime().toString(),
                 dateMetric: metric,
             }

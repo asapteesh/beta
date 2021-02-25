@@ -168,6 +168,7 @@ export default function MarketCreationDialog({
                     <DateTimePicker
                         value={formValues.resolutionDate}
                         onChange={handleResolutionDateChange}
+                        helperText={trans('marketCreation.label.helperText.resolutionDate')}
                     />
                 </div>
             </form>

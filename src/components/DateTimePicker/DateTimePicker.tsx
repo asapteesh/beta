@@ -6,10 +6,12 @@ import s from './DateTimePicker.module.scss';
 interface Props {
     value: Date;
     onChange: (date: Date | null) => void;
+    helperText?: string;
 }
 
 export default function DateTimePicker({
     value,
+    helperText,
     onChange,
 }: Props): ReactElement {
     return (
@@ -19,6 +21,7 @@ export default function DateTimePicker({
             className={s.root}
             ampm={false}
             onChange={onChange}
+            helperText={helperText}
         />
     );
 }

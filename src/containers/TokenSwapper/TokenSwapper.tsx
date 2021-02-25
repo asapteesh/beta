@@ -114,7 +114,7 @@ export default function TokenSwapper({
                 <IconButton onClick={switchTokenPlaces} icon={swap} alt={trans('market.action.switchTokens')} />
             </div>
 
-            <div className={s['token-swapper__token']}>
+            <div className={s.receiveInputs}>
                 <div className={s.tokenHeader}>
                     <span>{trans('market.label.youReceive')}</span>
                 </div>

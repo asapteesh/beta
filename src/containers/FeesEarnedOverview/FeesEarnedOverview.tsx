@@ -34,7 +34,7 @@ export default function FeesEarnedOverview({
                 <tbody>
                     {poolTokens.map((poolToken) => (
                         <tr className={s.tableRow} key={`${poolToken.marketId}_${poolToken.outcomeId}`}>
-                            <td>
+                            <td className={s.description}>
                                 <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
                                     {poolToken.marketDescription}
                                 </Link>

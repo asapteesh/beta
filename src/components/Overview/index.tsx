@@ -1,12 +1,16 @@
 import React, { ReactElement } from 'react';
-import s from './overview.module.scss';
+import s from './Overview.module.scss';
 
 interface KeyValue {
     key: String,
     value: String
 }
 
-export default function Overview(data: Array<KeyValue>): ReactElement {
+interface Props {
+    data: KeyValue[]
+}
+
+export default function Overview({data}: Props): ReactElement {
     return (
         <div className={s['swap-overview']}>
             {

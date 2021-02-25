@@ -57,6 +57,7 @@ export async function getAccountBalancesInfo(accountId: string): Promise<Account
                             balance
                             outcome_id
                             pool_id
+                            spent
                             market {
                                 description
                                 outcome_tags

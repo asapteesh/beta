@@ -17,9 +17,14 @@
     margin-bottom: 2rem;
 }
 
+.tableWrapper {
+    overflow-y: auto;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
+    white-space: nowrap;
 }
 
 .tableHeadRow {

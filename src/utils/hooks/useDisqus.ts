@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
-import { NODE_ENV } from "../../config";
+import { NETWORK, NODE_ENV, PROTOCOL_ACCOUNT_ID } from "../../config";
 import { useDarkmode } from "../darkmode";
 
 export default function useDisqus(identifier: string, title?: string) {
@@ -16,7 +16,7 @@ export default function useDisqus(identifier: string, title?: string) {
             this.page.url = window.location.href;
 
             // @ts-ignore
-            this.page.identifier = NODE_ENV + params[identifier] + "_0";
+            this.page.identifier = NODE_ENV + NETWORK + PROTOCOL_ACCOUNT_ID + params[identifier] + "_0";
 
             // @ts-ignore
             this.page.title = title;

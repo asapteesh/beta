@@ -41,6 +41,10 @@ export function calculatePayout(
             claimable = claimable.add(payout);
         });
 
+        if (poolToken) {
+            
+        }
+
         if (escrowValidMarket) {
             claimable = claimable.add(escrowValidMarket.total_amount);
         }

@@ -23,8 +23,8 @@ export default function ClaimFees({
     escrowStatus,
     onClaim,
 }: Props): ReactElement {
-    const payout = calculatePayout(market.outcomeTokens, market.payoutNumerator, escrowStatus, poolToken);
-
+    const payout = calculatePayout(market.outcomeTokens, market.payoutNumerator, escrowStatus, market.poolTokenInfo.totalSupply, poolToken);
+    
     return (
         <div>
             {market.invalid && (

@@ -16,6 +16,10 @@ export function calculatePayout(
     if (poolToken) {
         claimable = claimable.add(poolToken.fees);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> finished correct valid market payout calculations
     
     // Token balance * payout numerator
     if (payoutNumerator) {
@@ -40,10 +44,6 @@ export function calculatePayout(
 
             claimable = claimable.add(payout);
         });
-
-        if (poolToken) {
-            
-        }
 
         if (escrowValidMarket) {
             claimable = claimable.add(escrowValidMarket.total_amount);

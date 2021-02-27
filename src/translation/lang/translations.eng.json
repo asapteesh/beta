@@ -81,7 +81,7 @@
     "market.claimEarnings.label.outcome": "Outcome",
     "market.claimEarnings.label.balance": "Your balance",
     "market.claimEarnings.label.payout": "Payout per share",
-    "market.claimEarnings.label.claimable": "Claimable (including earned fees through liquidity providing and :tokenName hold in escrow):",
+    "market.claimEarnings.label.claimable": "Claimable (including earned fees through liquidity providing, shares left in LP pool and :tokenName hold in escrow):",
 
     "market.overview.rate": "Rate",
     "market.overview.inverseRate": "Inverse rate",

@@ -17,6 +17,7 @@ export function calculatePayout(
         claimable = claimable.add(poolToken.fees);
     }
 
+    
     // Token balance * payout numerator
     if (payoutNumerator) {
         const escrowValidMarket = escrowStatus.find(status => status.type === 'valid_escrow');
@@ -26,23 +27,20 @@ export function calculatePayout(
             const token = tokens.find(token => token.outcomeId === outcome);
             if (!token || num.eq("0")) return;
 
-            let payout = new Big(token.balance).mul(num.div(`1e${token.decimals}`));
-
+            const payout = new Big(token.balance).mul(num.div(`1e${token.decimals}`));
             // Calculate payout from still existent lp tokens
             if (poolToken) {
                 let bal = new Big(poolToken.balance);
                 if (bal.eq("0")) return;
-                let ts = new Big(poolTokenTotalSupply)
+                let ts = new Big(poolTokenTotalSupply);
                 let relBal = bal.div(ts);
                 let outcomeOwnership = relBal.mul(tokens[outcome].poolBalance);
-                payout.add(outcomeOwnership.mul(num.div(`1e${token.decimals}`)));
+                let claimableThroughExit = outcomeOwnership.mul(num.div(`1e${token.decimals}`));
+                claimable = claimable.add(claimableThroughExit);
             }
+
             claimable = claimable.add(payout);
         });
-
-        if (poolToken) {
-            
-        }
 
         if (escrowValidMarket) {
             claimable = claimable.add(escrowValidMarket.total_amount);

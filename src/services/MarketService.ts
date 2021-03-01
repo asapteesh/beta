@@ -8,6 +8,7 @@ import { GraphMarketResponse, MarketCategory, MarketType, MarketViewModel, trans
 import { TokenMetadata } from '../models/TokenMetadata';
 import { TokenViewModel, transformToMainTokenViewModel, transformToTokenViewModels } from '../models/TokenViewModel';
 import { UserBalance } from '../models/UserBalance';
+import trans from '../translation/trans';
 import { getAccountInfo, getBalancesForMarketByAccount } from './AccountService';
 import { createDefaultTokenMetadata, getCollateralTokenMetadata } from './CollateralTokenService';
 import createProtocolContract from './contracts/ProtocolContract';
@@ -26,10 +27,28 @@ export interface MarketFormValues {
     upperBound: Big;
 }
 
-export async function createMarket(values: MarketFormValues): Promise<FetchResult<any, string>> {
+function createOutcomes(values: MarketFormValues): string[] {
+    if (values.type === MarketType.Categorical) {
+        return values.outcomes;
+    }
+
+    if (values.type === MarketType.Scalar) {
+        return [
+            values.lowerBound.toString(),
+            values.upperBound.toString(),
+        ];
+    }
+
+    return [
+        trans('market.outcomes.yes'),
+        trans('market.outcomes.no'),
+    ];
+}
+
+export async function createMarket(values: MarketFormValues): Promise<void> {
     try {
         const protocol = await createProtocolContract();
-        const outcomes = values.outcomes.length > 2 ? values.outcomes : ['YES', 'NO'];
+        const outcomes = createOutcomes(values);
         const tokenMetadata = await getCollateralTokenMetadata(values.collateralTokenId);
         const formattedFee = 100 / DEFAULT_FEE;
 
@@ -42,19 +61,8 @@ export async function createMarket(values: MarketFormValues): Promise<FetchResul
             values.collateralTokenId,
             values.extraInfo
         );
-
-        return {
-            type: FetchResultType.Success,
-            data: {},
-            status: 200,
-        }
     } catch (error) {
         console.error('[createMarket]', error);
-        return {
-            type: FetchResultType.Error,
-            error,
-            status: 500,
-        }
     }
 }
 

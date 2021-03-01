@@ -26,6 +26,8 @@ import { setMarketDetail } from '../../redux/market/market';
 import NoWrappedNearCardConnector from '../../connectors/NoWrappedNearCardConnector';
 import { isEligibleForRedeeming } from '../../services/MarketService';
 import RedeemConnector from '../../connectors/RedeemConnector';
+import { MarketType } from '../../models/Market';
+import SeedScalarMarketConnector from '../../connectors/SeedScalarMarketConnector';
 
 interface RouterParams {
     marketId: string;
@@ -89,7 +91,7 @@ export default function MarketPage() {
                             }, {
                                 element: <SeedPoolConnector key="seedpool" />,
                                 label: trans('market.label.seedPool'),
-                                show: account !== null && market?.finalized === false && !isExpired && !hasMarketLiquidity,
+                                show: account !== null && market?.type !== MarketType.Scalar && market?.finalized === false && !isExpired && !hasMarketLiquidity,
                                 id: '3',
                             }, {
                                 element: <MarketClosed key="marketClosed" />,
@@ -111,6 +113,11 @@ export default function MarketPage() {
                                 label: trans('market.label.redeem'),
                                 show: account !== null && hasMarketLiquidity && market?.finalized === false && canRedeem,
                                 id: '7',
+                            }, {
+                                element: <SeedScalarMarketConnector key="seedScalar" />,
+                                label: trans('market.label.seedPool'),
+                                show: account !== null && market?.type === MarketType.Scalar && market?.finalized === false && !isExpired && !hasMarketLiquidity,
+                                id: '8',
                             }]}
                         />
                     </ActionsCard>

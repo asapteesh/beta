@@ -16,6 +16,9 @@
     "pages.resoluteOverview": "Finalized",
     "pages.pendingOverview": "Pending",
 
+    "market.outcomes.yes": "YES",
+    "market.outcomes.no": "NO",
+
     "menu.logout": "Logout",
     "menu.profile": "Positions",
     "menu.wrapNear": "Wrap NEAR",
@@ -139,6 +142,8 @@
     "feesEarned.table.market": "Market",
     "feesEarned.table.balance": "Pool token balance",
     "feesEarned.table.feesEarned": "Fees earned",
+
+    "seedScalarMarket.explanation": "Seed the pool with :tokenName, pick what the initial value is.",
 
     "seedPool.wrongUser.title": "Only the creator of the market can seed the pool",
     "seedPool.wrongUser.description": "Please come back later. If you are the creator, please login as :account to seed the pool.",

@@ -29,3 +29,14 @@
 .noMargin {
     margin: 0;
 }
+
+.depositButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.depositCancelButton {
+    background-color: transparent;
+    color: var(--c-text);
+    margin-right: .5rem;
+}

@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { subDays, subMonths, subWeeks } from 'date-fns';
+import { subDays, subMonths, subWeeks, differenceInDays } from 'date-fns';
 import { MarketViewModel } from '../models/Market';
 import { PriceHistoryData } from '../models/PriceHistoryData';
 import { graphqlClient } from './GraphQLService';
@@ -10,6 +10,22 @@ export enum Period {
     OneMonth = '1m',
     ThreeWeeks = '3w',
     All = 'all',
+}
+
+export function getAllHistoryMetric(creationDate: Date, endDate: Date): string {
+    const diffDays = differenceInDays(endDate, creationDate);
+
+    // Market takes longer than 4 weeks
+    if (diffDays > 28) {
+        return 'week';
+    }
+
+    // Market takes less than 7 days but more than 1 day
+    if (diffDays <= 7 && diffDays > 1) {
+        return 'day';
+    }
+
+    return 'hour';
 }
 
 export async function getPricesHistoryByMarketId(market: MarketViewModel, period: Period): Promise<PriceHistoryData[]> {
@@ -37,7 +53,7 @@ export async function getPricesHistoryByMarketId(market: MarketViewModel, period
                 break;
             case Period.All:
                 chosenPeriondDate = new Date(0);
-                metric = 'week'
+                metric = getAllHistoryMetric(market.creationDate ?? new Date(0), market.resolutionDate);
                 break;
         }
 

@@ -18,6 +18,7 @@ export default function SwapOverview({formValues}: SwapOverviewProps): ReactElem
     const amountOut = new Big(formValues.amountOut);
     const divisor = new Big("100");
     const profitPercentage = formValues.amountIn !== "0" ? amountOut.minus(amountIn).div(amountIn).mul(divisor).round(2).toString() : "0";
+    
     const overViewData = [
         {
             key: trans('market.overview.rate'),

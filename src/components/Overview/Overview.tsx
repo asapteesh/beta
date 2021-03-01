@@ -3,12 +3,12 @@ import trans from '../../translation/trans';
 import s from './Overview.module.scss';
 
 interface KeyValue {
-    key: String,
-    value: String
+    key: string,
+    value: string
 }
 
 interface Props {
-    header: String,
+    header: string,
     data: KeyValue[]
 }
 

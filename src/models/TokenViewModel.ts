@@ -19,6 +19,7 @@ export interface TokenViewModel {
     poolWeight: Big;
     poolBalance: string;
     weight: number;
+    spent: string,
     odds: Big;
     decimals: number;
     isCollateralToken: boolean;
@@ -84,6 +85,7 @@ export function transformToTokenViewModels(
             poolBalance: poolBalance?.poolBalance || "0",
             poolWeight: poolBalance?.poolWeight || new Big(0),
             weight: poolBalance?.weight || 0,
+            spent: userBalance?.spent ?? "0",
             decimals: collateralToken?.decimals ?? 18,
             odds: poolBalance?.odds || new Big(0),
             isCollateralToken,
@@ -126,6 +128,7 @@ export async function transformToMainTokenViewModel(
         priceSymbolPosition: 'left',
         tokenName: metadata.name,
         tokenSymbol: metadata.symbol,
+        spent: "0",
         poolBalance: "",
         weight: 0,
         tokenAccountId: collateralTokenAccountId,

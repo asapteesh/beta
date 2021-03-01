@@ -40,6 +40,9 @@
 
     "redeem.description": "If you have shares in every outcome, you can redeem them for collateral. You are eligible for :amount :tokenSymbol",
     "redeem.action.submit": "Redeem",
+    "redeem.overview.escrowValid": "Claimable if market is valid",
+    "redeem.overview.escrowInvalid": "Claimable if market is invalid",
+    "redeem.overview.paidNow": "Paid now",
 
     "marketStatus.uknown": "Unknown",
     "marketStatus.finalized": "Finalized",

@@ -34,25 +34,34 @@ export default function FeesEarnedOverview({
                         </tr>
                     </thead>
                     <tbody>
-                        {poolTokens.map((poolToken) => (
-                            <tr className={s.tableRow} key={`${poolToken.marketId}_${poolToken.outcomeId}`}>
-                                <td className={s.description}>
-                                    <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                        {poolToken.marketDescription}
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                        {formatCollateralToken(poolToken.balance, poolToken.collateralTokenDecimals)}
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={routePaths.marketDetail(poolToken.marketId)} className={s.link}>
-                                        {formatCollateralToken(poolToken.fees, poolToken.collateralTokenDecimals)}
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
+                        {poolTokens.map((poolToken) => {
+                            const href = {
+                                pathname: routePaths.marketDetail(poolToken.marketId),
+                                state: {
+                                    canGoBack: true,
+                                }
+                            };
+
+                            return (
+                                <tr className={s.tableRow} key={`${poolToken.marketId}_${poolToken.outcomeId}`}>
+                                    <td className={s.description}>
+                                        <Link to={href} className={s.link}>
+                                            {poolToken.marketDescription}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {formatCollateralToken(poolToken.balance, poolToken.collateralTokenDecimals)}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {formatCollateralToken(poolToken.fees, poolToken.collateralTokenDecimals)}
+                                        </Link>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

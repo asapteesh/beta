@@ -1,6 +1,5 @@
 import React from 'react';
 import classnames from 'classnames';
-import LinkButton from '../../components/LinkButton';
 import { MarketViewModel } from '../../models/Market';
 import { formatResolutionDate } from '../../services/MarketService';
 import trans from '../../translation/trans';
@@ -9,23 +8,26 @@ import s from './MarketHeader.module.scss';
 import MarketOpinionCard from '../../compositions/MarketOpinionCard';
 import Tag from '../../components/Tag';
 import getCategoryInfo from '../../utils/getCategoryInfo';
+import Button from '../../components/Button';
 
 interface Props {
     market: MarketViewModel;
     className?: string;
+    onGoBackClick: () => void;
 }
 
 export default function MarketHeader({
     market,
+    onGoBackClick,
     className = '',
 }: Props) {
     return (
         <header className={classnames(s['root'], className)}>
             <div className={s['wrapper']}>
                 <div className={s.headerItem}>
-                    <LinkButton className={s['market-header__back-button']} href="/">
+                    <Button className={s['market-header__back-button']} onClick={onGoBackClick}>
                         {trans('navigation.back')}
-                    </LinkButton>
+                    </Button>
                     {market.category.length > 0 && (<Tag className={s.categoryTag} category={market.category[0]} />)}
 
                     <h1 className={s.title}>{market.description}</h1>

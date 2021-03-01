@@ -38,35 +38,44 @@ export default function UserBalancesOverview({
                     </thead>
                     <tbody>
                         {/** Filters out any pool tokens */}
-                        {balances.filter(balance => balance.outcomeTag).map((info) => (
-                            <tr className={s.tableRow} key={`${info.marketId}_${info.outcomeId}`}>
-                                <td className={s.marketDescription}>
-                                    <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
-                                        {info.marketDescription}
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
-                                        {info.outcomeTag}
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
-                                        {formatCollateralToken(info.balance, info.collateralTokenMetadata.decimals)}
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
-                                        {formatCollateralToken(info.spent, info.collateralTokenMetadata.decimals)} {info.collateralTokenMetadata.symbol}
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={routePaths.marketDetail(info.marketId)} className={s.link}>
-                                        {info.marketStatus}
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
+                        {balances.filter(balance => balance.outcomeTag).map((info) => {
+                            const href = {
+                                pathname: routePaths.marketDetail(info.marketId),
+                                state: {
+                                    canGoBack: true,
+                                }
+                            };
+
+                            return (
+                                <tr className={s.tableRow} key={`${info.marketId}_${info.outcomeId}`}>
+                                    <td className={s.marketDescription}>
+                                        <Link to={href} className={s.link}>
+                                            {info.marketDescription}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {info.outcomeTag}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {formatCollateralToken(info.balance, info.collateralTokenMetadata.decimals)}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {formatCollateralToken(info.spent, info.collateralTokenMetadata.decimals)} {info.collateralTokenMetadata.symbol}
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={href} className={s.link}>
+                                            {info.marketStatus}
+                                        </Link>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

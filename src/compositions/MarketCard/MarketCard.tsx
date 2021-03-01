@@ -20,7 +20,7 @@ export default function MarketCard({
     className = '',
 }: Props) {
     return (
-        <Link to={href} className={classnames(s.root, className)}>
+        <Link to={{ pathname: href, state: { canGoBack: true } }} className={classnames(s.root, className)}>
             <MarketInfoCard market={market} className={s.infoCard} />
             <MarketOpinionCard market={market} />
         </Link>

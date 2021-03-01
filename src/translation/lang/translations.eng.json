@@ -6,7 +6,7 @@
     "global.token": "token",
     "global.balance": "balance",
     "global.comments": "Comments",
-    "global.poolToken": "Liquidity Provider Token",
+    "global.poopoken": "Liquidity Provider Token",
 
     "global.action.cancel": "Cancel",
     "global.action.submit": "Submit",
@@ -88,6 +88,9 @@
     "market.overview.estimatedFee": "Estimated fee",
     "market.overview.maxSlippage": "Max. slippage",
     "market.overview.maxPayout": "Max. payout",
+    "market.overview.escrowValid": "Claimable if market is valid",
+    "market.overview.escrowInvalid": "Claimable if market is invalid",
+    "market.overview.paidNow": "Paid now",
 
     "market.category.crypto": "Crypto",
     "market.category.esports": "Esports",
@@ -114,7 +117,7 @@
     "marketCreation.label.outcomes": "Outcomes",
     "marketCreation.label.outcome": "Outcome :number",
     "marketCreation.label.addMoreOutcomes": "Add more outcomes",
-    "marketCreation.label.collateralToken": "Collateral token",
+    "marketCreation.label.collaterapoken": "Collateral token",
 
     "marketClosed.description": "This market has ended. Resolution is currently in progress, come back later to claim your earnings.",
 

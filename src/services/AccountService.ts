@@ -123,7 +123,7 @@ export async function getBalancesForMarketByAccount(accountId: string, marketId:
                             balance
                             outcome_id
                             pool_id,
-
+                            spent,
                             market {
                                 outcome_tags
 

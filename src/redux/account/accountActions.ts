@@ -37,7 +37,7 @@ export function loadNearBalances() {
         let accountInfo = await getAccountInfo();
         if (accountInfo !== null) {
             const storageUsage = await getWrappedNearStorageBalance();
-    
+
             if (storageUsage.total === '0') {
                 const requiredDeposit = await getRequiredWrappedNearStorageDeposit();
                 dispatch(setRequiredWrappedNearDeposit(requiredDeposit));

@@ -88,10 +88,10 @@ export default function WrapNearDialog({
             canSubmit={errors.canSubmit}
             hideButtons={requiredDeposit !== '0'}
         >
-            <p>{trans('wrapNearDialog.description')}</p>
 
             {requiredDeposit === '0' && (
                 <>
+                    <p>{trans('wrapNearDialog.description')}</p>
                     <div className={s.token}>
                         <div className={classnames(s.tokenHeader, s.noMargin)}>
                             <span>{trans('market.label.youPay')}</span>
@@ -132,7 +132,10 @@ export default function WrapNearDialog({
             {requiredDeposit !== '0' && (
                 <>
                     <p>{trans('wrapNearDialog.requiredDeposit.description', { amount: formatCollateralToken(requiredDeposit, 24, 5) })}</p>
-                    <Button onClick={onDepositClick}>{trans('wrapNearDialog.requiredDeposit.submit', { amount: formatCollateralToken(requiredDeposit, 24, 5) })}</Button>
+                    <div className={s.depositButtons}>
+                        <Button className={s.depositCancelButton} onClick={onRequestClose}>{trans('global.action.cancel')}</Button>
+                        <Button onClick={onDepositClick}>{trans('wrapNearDialog.requiredDeposit.submit', { amount: formatCollateralToken(requiredDeposit, 24, 5) })}</Button>
+                    </div>
                 </>
             )}
 
